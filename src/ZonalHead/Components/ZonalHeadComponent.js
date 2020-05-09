@@ -5,11 +5,11 @@ import AssistantTableForm from '../forms/ViewAssistantForm';
 const ZonalHeadOperations = () => {
     //Data
     const AssistantData = [
-        { id: 1, name: 'satish', username: "satish01" }
-        , { id: 2, name: 'ramesh', username: "ramesh01" },
-        { id: 3, name: 'manish', username: "manish01" }
+        { id: 1, name: 'satish', username: "satish01",location:"hyderabad" }
+        , { id: 2, name: 'ramesh', username: "ramesh01",location:"chennai" },
+        { id: 3, name: 'manish', username: "manish01",location:"pune" }
     ];
-    const initialFormState = { id: null, name: "", username: '' };
+    const initialFormState = { id: null, name: "", username: '',location:"" };
     //setting State
     const [assistants, setAssistants] = useState(AssistantData);
     const [currentAssistant, setCurrentAssistant] = useState(initialFormState);
@@ -27,34 +27,38 @@ const ZonalHeadOperations = () => {
         setEditing(false)
         setAssistants(assistants.map(assistant => (assistant.id === id ? updateAssistant : assistant)))
     }
+    const setEdit=()=>{
+        console.log("setEdit is calling");
+        setEditing(false)
+    }
     const editRow = assistant => {
         setEditing(true);
-        setCurrentAssistant({ id: assistant.id, name: assistant.name, username: assistant.username })
+        setCurrentAssistant({ id: assistant.id, name: assistant.name, username: assistant.username,location:assistant.location })
     }
     return (
         <div className="container">
-            <h1>ZonalHeadOperations</h1>
+            {/* <h1>ZonalHeadOperations</h1> */}
             <div className="flex-row">
-                <div className="flex-large">
+                <div >
                     {editing ? (<Fragment>
                         <h2>
-                            Update Assistant
+                            Update technician
                     </h2>
                         <UpdateAssistantForm
                             editing={editing}
-                            setEditing={setEditing}
+                            setEdit={setEdit}
                             currentAssistant={currentAssistant}
                             updateAssistant={updateAssistant} />
 
 
                     </Fragment>) : (<Fragment>
-                        <h2>Add Assistant</h2>
+                        <h2>Add technician</h2>
                         <AddAssistantForm addAssistant={addAssistant} />
                     </Fragment>)}
                 </div>
                 <div className="flex-large">
                     <h2>
-                        View Assistants
+                        View technicians
                  </h2>
                     <AssistantTableForm
                         assistants={assistants}

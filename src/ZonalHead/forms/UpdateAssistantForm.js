@@ -5,12 +5,17 @@ const UpdateAssistantForm = props => {
     useEffect(() => {
         setAssistant(props.currentAssistant)
     }, [props])
-    const handleInputChange = event => {
-        event.preventDefault();
-        console.log("@@@handleInputChange@@@",event.target);
-        const [name, value] = event.target;
-
-        setAssistant({ ...assistant, [name]: value })
+    const handleNameInputChange = name => {
+        // event.preventDefault();
+        // console.log("@@@handleInputChange@@@",event);
+        // const [name, value] = event;
+        setAssistant({ ...assistant, name:name  })
+    }
+    const handleUsernameInputChange=username=>{
+        setAssistant({...assistant,username:username})
+    }
+    const handleLocationInputChange=loc=>{
+      setAssistant({...assistant,location:loc})
     }
     return (
         <form onSubmit={event => {
@@ -18,11 +23,14 @@ const UpdateAssistantForm = props => {
             props.updateAssistant(assistant.id, assistant)
         }}>
             <label>name</label>
-            <input type="text" name="name" value={assistant.name} onChange={handleInputChange} />
+            {/* <input type="text" name="name" value={assistant.name} onChange={handleInputChange} /> */}
+            <input type="text" name="name" defaultValue={assistant.name} onChange={event => handleNameInputChange(event.target.value)}/>
             <label>username</label>
-            <input type="text" name="username" value={assistant.username} onChange={handleInputChange} />
-            <button>Update assistant</button>
-            <button onClick={() => props.setEditiing(false)} className="button  muted-button">cancel</button>
+            <input type="text" name="username" defaultValue={assistant.username} onChange={event=>handleUsernameInputChange(event.target.value)} />
+            <label>location</label>
+            <input type="text" name="location" defaultValue={assistant.location} onChange={event=>handleLocationInputChange(event.target.value)} />
+            <button>Update technician</button>
+            <button onClick={() => props.setEdit()} className="button  muted-button">cancel</button>
         </form>
     )
 }

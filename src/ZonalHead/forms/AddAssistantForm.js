@@ -18,7 +18,9 @@ const AddAssistantForm = props => {
             <input  type="text" name="name" value={assistant.name} onChange={handleInputChange}/>
             <label> Username</label>
             <input type="text" name="username" value={assistant.username} onChange={handleInputChange}/>
-            <button>Add new assistant</button>
+            <label> Location</label>
+            <input type="text" name="location" value={assistant.location} onChange={handleInputChange}/>
+            <button>Add new technician</button>
         </form>)
 }
 export default AddAssistantForm;
