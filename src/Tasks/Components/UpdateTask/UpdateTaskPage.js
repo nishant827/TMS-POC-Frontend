@@ -2,24 +2,51 @@ import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
-import AddItemPage from "../CreateTask/AddItemPage";
+import Select from 'react-select';
 
 
 const UpdateTaskPage = (props) => {
-  const [formData, setFormData] = useState(props);
+  const [formData, setFormData] = useState({
+    towerId: "",
+    address: "",
+    taskType: "",
+    taskTitle: "",
+    taskDescription: "",
+    technicianName: null,
+    technicians: [
+      { value: 'sam', label:'Sam' },
+      { value: 'Smith', label: 'Smith'},
+      {value: 'Karen', label: 'Karen'}],
+    startDate: "",
+    estimatedEndDate: "",
+    status: "",
+    item: null,
+    options: [
+      { value: 'receiver', label: 'Receiver' },
+      { value: 'transmitter', label: 'Transmitter' },
+      { value: 'battery', label: 'Battery' },
+    ],
+});
 
-  const { towerId, address, taskType, taskTitle, taskDescription, technicianName, startDate, estimatedEndDate, status } = formData;
+  const { towerId, address, taskType, taskTitle, taskDescription, technicianName,technicians, startDate, estimatedEndDate, status,item,options } = formData;
 
   const onChange = (e) => {
+    console.log(e);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-      console.log( towerId, address, taskType, taskTitle, taskDescription, technicianName, startDate, estimatedEndDate, status);
       alert("Task created successfully!!");
   };
-
+  
+  const handleTechnicianSelectChange = e => {
+    setFormData({ ...formData, [technicianName]: e[0].value });
+  };
+  const handleItemSelectChange = e => {
+    setFormData({ ...formData, [item]: e.value });
+  };
+  
   return (
     <Fragment>
       <h1 className="large text-primary">Update Task</h1>
@@ -92,14 +119,14 @@ const UpdateTaskPage = (props) => {
         </div>
         <div className="col-sm-4">
           <div className="form-group">
-            <input
-              type="text"
-              className= "form-control input-lg"
-              placeholder="technician name"
-              name="technicianName"
-              value={technicianName}
-              onChange={(e) => onChange(e)}
-            />
+          <Select
+            name="technicians"
+            placeholder="select Technician"
+            value={item}
+            onChange={(e)=>handleTechnicianSelectChange(e)}
+            options={technicians}
+            isMulti= {true}
+          />
           </div>
         </div>
       </div>
@@ -142,14 +169,17 @@ const UpdateTaskPage = (props) => {
             />
           </div>
         </div>
+        <div className="col-sm-4">
+          <Select
+            placeholder="select item"
+            value={item}
+            onChange={(e)=>handleItemSelectChange(e)}
+            options={options}
+          />
+        </div>
       </div>
-      
         <input type="submit" className="primary btn btn-primary" value="Update Task" />
       </form>
-      <form>
-
-      </form>
-      <AddItemPage />
     </Fragment>
   );
 };
