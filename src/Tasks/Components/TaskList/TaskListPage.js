@@ -5,42 +5,40 @@ import Alert from "react-bootstrap/Alert";
 
 const TaskListPage = () => {
   const [formData, setFormData] = useState([{
-    towerId: "",
-    address: "",
-    taskType: "",
-    taskTitle: "",
-    taskDescription: "",
-    technicianName: "",
-    startDate: "",
-    estimatedEndDate: "",
-    status: "",
+    towerId: "1234",
+    address: "221, B Baker street",
+    taskType: "Convert to 5G",
+    taskTitle: "Convert to 5G",
+    taskDescription: "Convert site in 5G tower",
+    technicianName: "Sam, Smith, Joshua",
+    startDate: "22-05-2020",
+    estimatedEndDate: "13-06-2020",
+    status: "Pending",
   },
   {
-    towerId: "",
-    address: "",
-    taskType: "",
-    taskTitle: "",
-    taskDescription: "",
-    technicianName: "",
-    startDate: "",
-    estimatedEndDate: "",
-    status: "",
+    towerId: "1234",
+    address: "221, B Baker street",
+    taskType: "Convert to 5G",
+    taskTitle: "Convert to 5G",
+    taskDescription: "Convert site in 5G tower",
+    technicianName: "Sam, Smith, Joshua",
+    startDate: "22-05-2020",
+    estimatedEndDate: "13-06-2020",
+    status: "Pending",
   },
   {
-    towerId: "",
-    address: "",
-    taskType: "",
-    taskTitle: "",
-    taskDescription: "",
-    technicianName: "",
-    startDate: "",
-    estimatedEndDate: "",
-    status: "",
+    towerId: "1234",
+    address: "221, B Baker street",
+    taskType: "Convert to 5G",
+    taskTitle: "Convert to 5G",
+    taskDescription: "Convert site in 5G tower",
+    technicianName: "Sam, Smith, Joshua",
+    startDate: "22-05-2020",
+    estimatedEndDate: "13-06-2020",
+    status: "Pending",
   }]);
 
   const {  } = formData;
-
-
   return (
     <Fragment>
         <h1 className="large text-primary">Task List</h1>
@@ -56,14 +54,16 @@ const TaskListPage = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>221 B Baker street</td>
-                    <td>Convert to 5G</td>
-                    <td>Sam, Joshua, Smith</td>
-                    <td>21-05-2020</td>
-                    <td>30-05-2020</td>
-                </tr>
+            {formData.map((taskrow, index) => (
+              <tr>
+                <td> { taskrow.towerId } </td>
+                <td> {taskrow.address } </td>
+                <td> {taskrow.taskTitle } </td>
+                <td> { taskrow.technicianName } </td>
+                <td> { taskrow.startDate } </td>
+                <td> { taskrow.estimatedEndDate } </td>
+              </tr>
+            ))}  
             </tbody>
         </table>
     </Fragment>
