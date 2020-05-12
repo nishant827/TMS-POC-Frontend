@@ -41,9 +41,8 @@ const ZonalHeadOperations = () => {
             <div className="flex-row">
                 <div >
                     {editing ? (<Fragment>
-                        <h2>
-                            Update technician
-                    </h2>
+                    
+                    <h3 className="large text-primary">Update technician</h3>
                         <UpdateAssistantForm
                             editing={editing}
                             setEdit={setEdit}
@@ -52,14 +51,13 @@ const ZonalHeadOperations = () => {
 
 
                     </Fragment>) : (<Fragment>
-                        <h2>Add technician</h2>
+                        <h2 className="large text-primary">Add technician</h2>
                         <AddAssistantForm addAssistant={addAssistant} />
                     </Fragment>)}
                 </div>
                 <div className="flex-large">
-                    <h2>
-                        View technicians
-                 </h2>
+                <h3 className="large text-primary">View technicians</h3>
+                 
                     <AssistantTableForm
                         assistants={assistants}
                         editRow={editRow}
