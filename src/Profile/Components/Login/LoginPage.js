@@ -21,7 +21,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Fragment>
+    <div className='container'>
       <h1 className="large text-primary">Sign In</h1>
       <p className="lead">Log Into Your Account</p>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
@@ -50,7 +50,7 @@ const LoginPage = () => {
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
       </form>
-    </Fragment>
+    </div>
   );
 };
 
