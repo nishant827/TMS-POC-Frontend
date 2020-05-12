@@ -29,7 +29,7 @@ const SignupPage = () => {
   };
 
   return (
-    <Fragment>
+    <div className='container'>
       <h1 className="large text-primary">Sign Up</h1>
       <p className="lead">Create Your Account</p>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
@@ -77,7 +77,7 @@ const SignupPage = () => {
       <p className="my-1">
         Already have an account? <Link to="/login">Sign In</Link>
       </p>
-    </Fragment>
+    </div>
   );
 };
 
