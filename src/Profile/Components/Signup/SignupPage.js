@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 
-const SignupPage = () => {
+const SignupPage = (props) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,7 +24,7 @@ const SignupPage = () => {
       alert("passwords are not same");
     } else {
       console.log(name, email, password, password2);
-      alert("Register Success");
+      props.history.push('/login')
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = (props) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,7 +17,7 @@ const LoginPage = () => {
     e.preventDefault();
 
     console.log("login success");
-    alert("login success");
+    props.history.push('/dashboard')
   };
 
   return (

@@ -10,6 +10,7 @@ import CreateTaskPage from './Tasks/Components/CreateTask/CreateTaskPage';
 import UpdateTaskPage from './Tasks/Components/UpdateTask/UpdateTaskPage';
 import TaskListPage from './Tasks/Components/TaskList/TaskListPage';
 import "bootstrap/dist/css/bootstrap.min.css"
+import Dashboard from './Profile/Components/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route component={CreateTaskPage } path='/createtask' exact />
           <Route component={UpdateTaskPage} path='/updatetask' exact />
           <Route component={TaskListPage} path='/tasklist' exact />
+          <Route component={Dashboard} path='/dashboard' exact />
         </Switch>
       </Router>
     </div>
