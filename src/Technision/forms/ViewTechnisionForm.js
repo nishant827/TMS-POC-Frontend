@@ -45,7 +45,7 @@ import React from 'react';
 const AssistantTable=props=>(
   <div className="table" id="results">
   
-  <div className='theader'>
+  <div className='theader' style={{"color":"#007bff"}}>
     <div className='table_header'>Name</div>
     <div className='table_header'>Username</div>
     <div className='table_header'>Location</div>

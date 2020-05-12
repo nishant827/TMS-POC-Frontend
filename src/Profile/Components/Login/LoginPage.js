@@ -1,10 +1,15 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-
+import {useSelector,useDispatch} from 'react-redux';
+import {signIn} from '../../actions/index'
 const LoginPage = (props) => {
+  const isLogged=useSelector(state=>state.loggedUser);
+  console.log("isLogged-Loginpage",isLogged);
+  const dispatch=useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+   
   });
 
   const { email, password } = formData;
@@ -16,7 +21,7 @@ const LoginPage = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    console.log("login success");
+    dispatch(signIn())
     props.history.push('/dashboard')
   };
 
@@ -44,8 +49,8 @@ const LoginPage = (props) => {
             onChange={(e) => onChange(e)}
           />
         </div>
-
-        <input type="submit" className="btn btn-primary" value="LogIn" />
+{!isLogged? <input type="submit" className="btn btn-primary" value="LogIn" />:""}
+       
         <p className="my-1">
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>

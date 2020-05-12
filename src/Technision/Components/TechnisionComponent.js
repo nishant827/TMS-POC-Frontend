@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
-import AddAssistantForm from '../forms/AddAssistantForm';
-import UpdateAssistantForm from '../forms/UpdateAssistantForm';
-import AssistantTableForm from '../forms/ViewAssistantForm';
+import AddAssistantForm from '../forms/AddTechnisionForm';
+import UpdateAssistantForm from '../forms/UpdateTechnisionForm';
+import AssistantTableForm from '../forms/ViewTechnisionForm';
 const ZonalHeadOperations = () => {
     //Data
     const AssistantData = [
@@ -51,7 +51,7 @@ const ZonalHeadOperations = () => {
 
 
                     </Fragment>) : (<Fragment>
-                        <h2 className="large text-primary">Add technician</h2>
+                        <h3 className="large text-primary">Add technician</h3>
                         <AddAssistantForm addAssistant={addAssistant} />
                     </Fragment>)}
                 </div>
