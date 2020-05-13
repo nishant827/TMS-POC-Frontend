@@ -32,12 +32,12 @@ function App() {
           <Route component={TaskListPage} path='/tasklist' exact />
           <Route component={Dashboard} path='/dashboard' exact />
           <Route component={LoginPage} path='/logout' exact />
-<<<<<<< HEAD
-          <Route component={sidebar} path="/sidebar" exact/>
+
+    
           <Redirect from="*" to='/' />   
-=======
+
           <Route component={CreateUser} path="/createuser" exact/>
->>>>>>> technision
+
         </Switch>
         <Footer/>
         </div>
