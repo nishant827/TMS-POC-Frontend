@@ -34,8 +34,17 @@ function App() {
           <Route component={TaskListPage} path='/tasklist' exact />
           <Route component={Dashboard} path='/dashboard' exact />
           <Route component={LoginPage} path='/logout' exact />
+<<<<<<< HEAD
           <Route component={CreateUser} path="/createuser" exact/>
           <Redirect from="*" to='/' />   
+=======
+
+    
+          <Redirect from="*" to='/' />   
+
+          <Route component={CreateUser} path="/createuser" exact/>
+
+>>>>>>> 8d248b0d320376f22643cfd6993a4480847a51b4
         </Switch>
         <Footer/>
         </div>
