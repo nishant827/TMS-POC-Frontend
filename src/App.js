@@ -7,13 +7,13 @@ import LoginPage from './Profile/Components/Login/LoginPage';
 import HomePage from './Home/HomePage';
 import Header from './Home/Header/header';
 import Footer from './Home/Footer/footer';
-import sidebar from './Home/sidebar/sidebar';
 import ZonalHeadOperations from './Technision/Components/TechnisionComponent';
 import CreateTaskPage from './Tasks/Components/CreateTask/CreateTaskPage';
 import UpdateTaskPage from './Tasks/Components/UpdateTask/UpdateTaskPage';
 import TaskListPage from './Tasks/Components/TaskList/TaskListPage';
 import "bootstrap/dist/css/bootstrap.min.css"
 import Dashboard from './Profile/Components/Dashboard/Dashboard';
+import CreateUser from './Users/CreateUser';
 
 function App() {
   return (
@@ -32,7 +32,7 @@ function App() {
           <Route component={TaskListPage} path='/tasklist' exact />
           <Route component={Dashboard} path='/dashboard' exact />
           <Route component={LoginPage} path='/logout' exact />
-          <Route component={sidebar} path="/sidebar" exact/>
+          <Route component={CreateUser} path="/createuser" exact/>
         </Switch>
         <Footer/>
         </div>
