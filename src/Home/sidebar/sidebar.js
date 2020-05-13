@@ -1,21 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-
+import '../../Home/sidebar/sidebar.css';
 const SidebarWithList = () => {
-  const options = {
-    side: "left",
-    effect: "slide-out",
-    speed: 250,
-    timing: 'ease-in-out'
-  }
+ 
+  console.log("sidebar is calling");
   return (
     
       
       <div className="collapse navbar-collapse navbar-ex1-collapse">
         <ul className="nav navbar-nav side-nav" style={{
           "backgroundColor": "blanchedalmond",
-          "margin-top": "-17px",
-          "margin-left": "-14px"
+          "marginTop": "-17px",
+          "marginLeft": "-14px"
         }}>
 
           <li>
