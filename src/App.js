@@ -13,7 +13,8 @@ import UpdateTaskPage from './Tasks/Components/UpdateTask/UpdateTaskPage';
 import TaskListPage from './Tasks/Components/TaskList/TaskListPage';
 import "bootstrap/dist/css/bootstrap.min.css"
 import Dashboard from './Profile/Components/Dashboard/Dashboard';
-import CreateUser from './Users/CreateUser';
+import CreateUser from './Users/Components/CreateUser/CreateUser';
+import UserList from './Users/Components/UserList/UserList';
 //app.js is calling
 const nonFun=()=>{
   
@@ -34,18 +35,10 @@ function App() {
           <Route component={TaskListPage} path='/tasklist' exact />
           <Route component={Dashboard} path='/dashboard' exact />
           <Route component={LoginPage} path='/logout' exact />
-<<<<<<< HEAD
           <Route component={CreateUser} path="/createuser" exact/>
+          <Route component={UserList} path="/userlist" exact/>
           <Redirect from="*" to='/' />   
-=======
-
-    
-          <Redirect from="*" to='/' />   
-
-          <Route component={CreateUser} path="/createuser" exact/>
-
->>>>>>> 8d248b0d320376f22643cfd6993a4480847a51b4
-        </Switch>
+          </Switch>
         <Footer/>
         </div>
       </Router>
