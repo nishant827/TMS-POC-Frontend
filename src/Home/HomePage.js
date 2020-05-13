@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <div>
-      Wel come to HomePage
+      Welcome to HomePage
     </div>
   );
 };

@@ -1,15 +1,15 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-import {useSelector,useDispatch} from 'react-redux';
-import {signIn} from '../../actions/index'
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { signIn } from "../../actions/index";
 const LoginPage = (props) => {
-  const isLogged=useSelector(state=>state.loggedUser);
-  console.log("isLogged-Loginpage",isLogged);
-  const dispatch=useDispatch();
+  const user = useSelector((state) => state.loggedUser);
+  console.log("isLogged-Loginpage", user.isLogged);
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-   
   });
 
   const { email, password } = formData;
@@ -18,15 +18,32 @@ const LoginPage = (props) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-
-    dispatch(signIn())
-    props.history.push('/dashboard')
+    try {
+      let { status, data } = await axios.post(
+        "http://localhost:3030/api/login",
+        {
+          email,
+          password,
+        }
+      );
+      if (status === 200) {
+        dispatch(signIn(data.result.data.user));
+        localStorage.setItem("token", data.result.data.token);
+        props.history.push("/dashboard");
+      } else {
+        alert("Wrong password");
+        props.history.push("/login");
+      }
+    } catch (e) {
+      alert("Wrong password");
+      props.history.push("/login");
+    }
   };
 
   return (
-    <div className='container'>
+    <div className="container">
       <h1 className="large text-primary">Sign In</h1>
       <p className="lead">Log Into Your Account</p>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
@@ -49,8 +66,12 @@ const LoginPage = (props) => {
             onChange={(e) => onChange(e)}
           />
         </div>
-{!isLogged? <input type="submit" className="btn btn-primary" value="LogIn" />:""}
-       
+        {!user.isLogged ? (
+          <input type="submit" className="btn btn-primary" value="LogIn" />
+        ) : (
+            ""
+          )}
+
         <p className="my-1">
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>

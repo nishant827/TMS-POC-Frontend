@@ -22,7 +22,7 @@ function Dashboard(props) {
   return (
     <div>
       
-       <div className="row mt-5">
+       {/* <div className="row mt-5">
      
      <div className="col-4">
        <button onClick={() => createTask()}>Create Task</button>
@@ -34,7 +34,7 @@ function Dashboard(props) {
      <div className="col-4">
        <button onClick={() => getTaskList()}>Get Task List</button>
      </div>
-   </div>
+   </div> */}
     </div>
   
   );

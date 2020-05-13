@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import './global.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import SignupPage from './Profile/Components/Signup/SignupPage';
 import LoginPage from './Profile/Components/Login/LoginPage';
 import HomePage from './Home/HomePage';
@@ -33,6 +33,7 @@ function App() {
           <Route component={Dashboard} path='/dashboard' exact />
           <Route component={LoginPage} path='/logout' exact />
           <Route component={sidebar} path="/sidebar" exact/>
+          <Redirect from="*" to='/' />   
         </Switch>
         <Footer/>
         </div>
