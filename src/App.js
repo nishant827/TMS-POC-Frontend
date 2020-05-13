@@ -14,14 +14,16 @@ import TaskListPage from './Tasks/Components/TaskList/TaskListPage';
 import "bootstrap/dist/css/bootstrap.min.css"
 import Dashboard from './Profile/Components/Dashboard/Dashboard';
 import CreateUser from './Users/CreateUser';
-
+//app.js is calling
+const nonFun=()=>{
+  
+}
 function App() {
   return (
     <div className="App">
       <Router>
         <div>
         <Header />
-      
         <Switch>
           <Route component={HomePage} path="/" exact />
           <Route component={LoginPage} path="/login" exact />
@@ -32,12 +34,8 @@ function App() {
           <Route component={TaskListPage} path='/tasklist' exact />
           <Route component={Dashboard} path='/dashboard' exact />
           <Route component={LoginPage} path='/logout' exact />
-<<<<<<< HEAD
-          <Route component={sidebar} path="/sidebar" exact/>
-          <Redirect from="*" to='/' />   
-=======
           <Route component={CreateUser} path="/createuser" exact/>
->>>>>>> technision
+          <Redirect from="*" to='/' />   
         </Switch>
         <Footer/>
         </div>
