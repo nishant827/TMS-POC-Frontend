@@ -29,7 +29,9 @@ function Createuser(props) {
         debugger;
 
         const data = {
-            firstName: user.firstName, lastName: user.lastName, email: user.email, password: user.password, age: user.age, contactDetails: {
+            firstName: user.firstName, lastName: user.lastName, email: user.email, 
+            password: user.password, age: user.age, 
+            contactDetails: {
                 countryCode: user.countryCode,
                 mobileNo: user.mobileNo
             }, Gender: user.Gender,role:user.role
@@ -42,7 +44,7 @@ function Createuser(props) {
 
             .then((result) => {
            
-                props.history.push('/UserList')
+                props.history.push('/userlist')
 
             });
 

@@ -31,7 +31,7 @@ function UserList(props) {
     
           .then((result) => {  
     
-            props.history.push('/UserList')  
+            props.history.push('/userlist')  
     
           });  
     
