@@ -16,9 +16,7 @@ import Dashboard from './Profile/Components/Dashboard/Dashboard';
 import CreateUser from './Users/Components/CreateUser/CreateUser';
 import UserList from './Users/Components/UserList/UserList';
 //app.js is calling
-const nonFun=()=>{
-  
-}
+
 function App() {
   return (
     <div className="App">
@@ -40,6 +38,7 @@ function App() {
           <Redirect from="*" to='/' />   
           </Switch>
         <Footer/>
+
         </div>
       </Router>
     </div>
