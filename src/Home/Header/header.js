@@ -10,9 +10,90 @@ function Header() {
   const SignOut = () => {
     console.log("calling signout function");
     dispatch(signOut());
-    localStorage.removeItem('token')
+    localStorage.removeItem("token");
     console.log("header_page", user.isLogged);
   };
+
+  let header;
+  let role = user.user ? user.user.role : null;
+  console.log("roleee", role);
+  if (role === "SA") {
+    header = (
+      <Fragment>
+        <li className="nav-item">
+          <Link className="nav-link" to="/technision">
+            Technician
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/createuser">
+            Users
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/createtask">
+            Tasks
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/tasklist">
+            Sites
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" onClick={SignOut} to="/login">
+            SignOut
+          </Link>
+        </li>
+      </Fragment>
+    );
+  } else if (role === "ZH") {
+    header = (
+      <Fragment>
+        <li className="nav-item">
+          <Link className="nav-link" to="/technision">
+            Technician
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/createuser">
+            Users
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/createtask">
+            Tasks
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/tasklist">
+            Sites
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" onClick={SignOut} to="/login">
+            SignOut
+          </Link>
+        </li>
+      </Fragment>
+    );
+  } else {
+    header = (
+      <Fragment>
+        <li className="nav-item">
+          <Link className="nav-link" to="/tasklist">
+            Sites
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" onClick={SignOut} to="/login">
+            SignOut
+          </Link>
+        </li>
+      </Fragment>
+    );
+  }
+
   return (
     <nav className="navbar navbar-dark bg-dark">
       <h1>
@@ -22,28 +103,7 @@ function Header() {
       </h1>
       <ul className="nav">
         {user.isLogged ? (
-          <Fragment>
-            <li className="nav-item">
-              <Link className="nav-link" to="/technision">
-                Technician
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/createtask">
-                Tasks
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/tasklist">
-                Sites
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" onClick={SignOut} to="/login">
-                SignOut
-              </Link>
-            </li>
-          </Fragment>
+          header
         ) : (
           <Fragment>
             <li className="nav-item">
