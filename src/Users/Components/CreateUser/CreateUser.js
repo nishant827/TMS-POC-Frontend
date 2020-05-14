@@ -10,9 +10,9 @@ function Createuser(props) {
     Gender: "" ,role:""
     });
    const roles=[
-    { value: 'Technision', label:'Technision' },
-    { value: 'ZonalHead', label: 'ZonalHead'},
-    { value: 'Admin', label: 'Admin'}]
+    { value: 'SA', label:'SA' },
+    { value: 'ZH', label: 'ZH'},
+    { value: 'TECH', label: 'TECH'}]
     const [showLoading, setShowLoading] = useState(false);
 
     const apiUrl = "http://localhost:3030/api/user/register";

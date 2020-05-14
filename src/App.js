@@ -15,6 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import Dashboard from './Profile/Components/Dashboard/Dashboard';
 import CreateUser from './Users/Components/CreateUser/CreateUser';
 import UserList from './Users/Components/UserList/UserList';
+import UpdateUser from './Users/Components/EditUser/EditUser';
 //app.js is calling
 
 function App() {
@@ -35,10 +36,10 @@ function App() {
           <Route component={LoginPage} path='/logout' exact />
           <Route component={CreateUser} path="/createuser" exact/>
           <Route component={UserList} path="/userlist" exact/>
+          <Route component={UpdateUser} path="/editUser/:id" exact/>
           <Redirect from="*" to='/' />   
           </Switch>
         <Footer/>
-
         </div>
       </Router>
     </div>
