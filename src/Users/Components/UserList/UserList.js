@@ -5,18 +5,18 @@ import { useState, useEffect } from 'react'
 function UserList(props) {  
 
   const [data, setData] = useState([]);  
-
+  const token=localStorage.getItem('token');
   
+  const GetData = async () => {  
+     
+    const result = await axios('http://localhost:3030/api/user/list',{ headers: {"Authorization" : `${token}`} }); 
+    console.log("@@@@@@@@@@@@@@@@result@@@@@@@",result.data.data); 
+    setData(result.data.data);  
 
+  };  
   useEffect(() => {  
 
-    const GetData = async () => {  
-      const token=localStorage.getItem('token');
-      const result = await axios('http://localhost:3030/api/user/list',{ headers: {"Authorization" : `${token}`} }); 
-      console.log("@@@@@@@@@@@@@@@@result@@@@@@@",result.data.data); 
-      setData(result.data.data);  
-
-    };  
+   
 
   
 
@@ -25,23 +25,23 @@ function UserList(props) {
   }, []);  
   const deleteUser = (id) => {  
     
-        debugger;  
+        
     
-        axios.delete('http://localhost:3030/api/user/remove/' + id)  
+        axios.delete('http://localhost:3030/api/user/remove/' + id,{ headers: {"Authorization" : `${token}`} })  
     
           .then((result) => {  
-    
-            props.history.push('/userlist')  
+            GetData()
+            props.history.push('/userlist')  ;
     
           });  
     
       };  
     
-      const editUsere = (id) => {  
-    
+      const editUser = (id) => {  
+        console.log("editUser",id);
         props.history.push({  
     
-          pathname: '/edit/' + id  
+          pathname: '/editUser/' + id  
     
         });  
     
@@ -61,7 +61,7 @@ function UserList(props) {
     
                 <CardHeader>  
     
-                  <i className="fa fa-align-justify"></i> Usere List  
+                  <i className="fa fa-align-justify"></i> User List  
     
                   </CardHeader>  
     
@@ -99,7 +99,7 @@ function UserList(props) {
     
                         data.map((item, idx) => {  
     
-                          return <tr>  
+                          return <tr key={item._id}>  
     
                             <td>{item.firstName}</td>  
     
@@ -122,11 +122,11 @@ function UserList(props) {
     
                             <td>  
     
-                              <div class="btn-group">  
+                              <div className="btn-group">  
     
-                                <button className="btn btn-warning" onClick={() => { editUsere(item.Id) }}>Edit</button>  
+                                <button className="btn btn-warning" onClick={() => { editUser(item._id) }}>Edit</button>  
     
-                                <button className="btn btn-warning" onClick={() => { deleteUser(item.Id) }}>Delete</button>  
+                                <button className="btn btn-warning" onClick={() => { deleteUser(item._id) }}>Delete</button>  
     
                               </div>  
     
