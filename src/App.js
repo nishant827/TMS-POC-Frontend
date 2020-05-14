@@ -13,32 +13,32 @@ import UpdateTaskPage from './Tasks/Components/UpdateTask/UpdateTaskPage';
 import TaskListPage from './Tasks/Components/TaskList/TaskListPage';
 import "bootstrap/dist/css/bootstrap.min.css"
 import Dashboard from './Profile/Components/Dashboard/Dashboard';
-import CreateUser from './Users/CreateUser';
+import CreateUser from './Users/Components/CreateUser/CreateUser';
+import UserList from './Users/Components/UserList/UserList';
 //app.js is calling
-const nonFun = () => {
 
-}
 function App() {
   return (
     <div className="App">
       <Router>
         <div>
-          <Header />
-          <Switch>
-            <Route component={HomePage} path="/" exact />
-            <Route component={LoginPage} path="/login" exact />
-            <Route component={SignupPage} path="/signup" exact />
-            <Route component={ZonalHeadOperations} path="/technision" exact />
-            <Route component={CreateTaskPage} path='/createtask' exact />
-            <Route component={UpdateTaskPage} path='/updatetask' exact />
-            <Route component={TaskListPage} path='/tasklist' exact />
-            <Route component={Dashboard} path='/dashboard' exact />
-            <Route component={LoginPage} path='/logout' exact />
-            <Route component={CreateUser} path="/createuser" exact />
-            <Redirect from="*" to='/' />
-
+        <Header />
+        <Switch>
+          <Route component={HomePage} path="/" exact />
+          <Route component={LoginPage} path="/login" exact />
+          <Route component={SignupPage} path="/signup" exact />
+          <Route component={ZonalHeadOperations} path="/technision" exact />
+          <Route component={CreateTaskPage } path='/createtask' exact />
+          <Route component={UpdateTaskPage} path='/updatetask' exact />
+          <Route component={TaskListPage} path='/tasklist' exact />
+          <Route component={Dashboard} path='/dashboard' exact />
+          <Route component={LoginPage} path='/logout' exact />
+          <Route component={CreateUser} path="/createuser" exact/>
+          <Route component={UserList} path="/userlist" exact/>
+          <Redirect from="*" to='/' />   
           </Switch>
-          <Footer />
+        <Footer/>
+
         </div>
       </Router>
     </div>

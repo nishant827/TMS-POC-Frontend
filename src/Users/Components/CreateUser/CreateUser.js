@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 function Createuser(props) {
-
+   
     const [user, setuser] = useState({ firstName: '', lastName: '', email: '', password: '', age: '',  countryCode: '', mobileNo: "" , 
     Gender: "" ,role:""
     });
@@ -29,17 +29,22 @@ function Createuser(props) {
         debugger;
 
         const data = {
-            firstName: user.firstName, lastName: user.lastName, email: user.email, password: user.password, age: user.age, contactDetails: {
+            firstName: user.firstName, lastName: user.lastName, email: user.email, 
+            password: user.password, age: user.age, 
+            contactDetails: {
                 countryCode: user.countryCode,
                 mobileNo: user.mobileNo
             }, Gender: user.Gender,role:user.role
         };
         console.log("apiUrl",apiUrl,"data",data);
-        axios.post(apiUrl, data)
+        
+        const token=localStorage.getItem('token');
+        console.log("token",token);
+        axios.post(apiUrl, data, { headers: {"Authorization" : `${token}`} })
 
             .then((result) => {
            
-                props.history.push('/UserList')
+                props.history.push('/userlist')
 
             });
 
