@@ -1,19 +1,76 @@
 import React from 'react'  
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';  
+// import { } from 'reactstrap'; 
+import { Badge, CardHeader, Pagination, PaginationItem, PaginationLink, Table ,Modal, ModalHeader, ModalBody, ModalFooter, Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import axios from 'axios';  
-import { useState, useEffect } from 'react'  
+import { useState, useEffect } from 'react' 
+import Select from 'react-select';
 function UserList(props) {  
 
-  const [data, setData] = useState([]);  
+  const [data, setData] = useState([]); 
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal); 
   const token=localStorage.getItem('token');
-  
+  const [user, setuser] = useState({
+    firstName: '', lastName: '', email: '', password: '', age: '', countryCode: '', mobileNo: "",
+    Gender: "", role: ""
+  });
+  const roles = [
+    { value: 'SA', label: 'SA' },
+    { value: 'ZH', label: 'ZH' },
+    { value: 'TECH', label: 'TECH' }]
+  const [showLoading, setShowLoading] = useState(false);
   const GetData = async () => {  
-     
     const result = await axios('http://localhost:3030/api/user/list',{ headers: {"Authorization" : `${token}`} }); 
     console.log("@@@@@@@@@@@@@@@@result@@@@@@@",result.data.data); 
     setData(result.data.data);  
-
   };  
+  const apiUrl = "http://localhost:3030/api/user/register";
+
+  const handleUserSelectChange = e => {
+    console.log("e[0].value", e);
+    setuser({ ...user, role: e.value });
+  };
+
+  const Insertuser = (e) => {
+    console.log("Insertuser", user);
+    e.preventDefault();
+
+   
+
+    const data = {
+      firstName: user.firstName, lastName: user.lastName, email: user.email,
+      password: user.password, age: user.age,
+      contactDetails: {
+        countryCode: user.countryCode,
+        mobileNo: user.mobileNo
+      }, Gender: user.Gender, role: user.role
+    };
+    console.log("apiUrl", apiUrl, "data", data);
+
+    const token = localStorage.getItem('token');
+    console.log("token", token);
+    axios.post(apiUrl, data, { headers: { "Authorization": `${token}` } })
+
+      .then((result) => {
+        GetData();
+        // props.history.push('/userlist')
+
+      });
+
+  };
+
+  const onChange = (e) => {
+
+    e.persist();
+
+
+
+    setuser({ ...user, [e.target.name]: e.target.value });
+
+  }
+
+
+
   useEffect(() => {  
 
    
@@ -61,13 +118,13 @@ function UserList(props) {
     
                 <CardHeader>  
     
-                  <i className="fa fa-align-justify"></i> User List  
+                   
     
                   </CardHeader>  
     
                 <CardBody>  
-    
-                  <Table hover bordered striped responsive size="sm">  
+                <Button style={{"background":"#0366ee"}} onClick={toggle}>Add User</Button>
+                  <Table hover bordered striped responsive size="sm" style={{"margin-top": "6px"}}>  
     
                     <thead>  
     
@@ -122,11 +179,11 @@ function UserList(props) {
     
                             <td>  
     
-                              <div className="btn-group">  
+                              <div >  
     
-                                <button className="btn btn-warning" onClick={() => { editUser(item._id) }}>Edit</button>  
-    
-                                <button className="btn btn-warning" onClick={() => { deleteUser(item._id) }}>Delete</button>  
+                                <Button  style={{"background":"#0366ee"}}  onClick={() => { editUser(item._id) }}>Edit</Button>  
+                                 &nbsp;
+                                <Button  style={{"background":"#0366ee"}} onClick={() => { deleteUser(item._id) }}>Delete</Button>  
     
                               </div>  
     
@@ -146,7 +203,50 @@ function UserList(props) {
             </Col>  
     
           </Row>  
-    
+          <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Create user</ModalHeader>
+        <ModalBody>
+          <div className="app flex-row align-items-center">
+
+            <Form onSubmit={Insertuser}>
+              <div className="modal-body row" style={{ width: "110%" }}>
+                <div className="col-md-6">
+                  <Input type="text" name="firstName" id="firstName" placeholder="firstName" value={user.firstName} onChange={onChange} />
+                  <Input type="text" placeholder="Lastname" name="lastName" id="lastName" value={user.lastName} onChange={onChange} />
+                  <Input type="number" placeholder="Age" name="age" id="age" value={user.age} onChange={onChange} />
+                  <Input type="text" placeholder="Email" name="email" id="email" value={user.email} onChange={onChange} />
+                  <Select
+                    name="role"
+                    placeholder="select Role"
+                    onChange={(e) => handleUserSelectChange(e)}
+                    options={roles}
+
+                  />
+                </div>
+                <div className="col-md-6">
+                  <Input type="password" placeholder="Password" name="password" id="password" value={user.password} onChange={onChange} />
+                  <Input type="number" placeholder="countryCode" name="countryCode" id="countryCode" value={user.countryCode} onChange={onChange} />
+                  <Input type="number" placeholder="mobileNo" name="mobileNo" id="mobileNo" value={user.mobileNo} onChange={onChange} />
+                  <Input type="text" placeholder="Gender" name="Gender" id="Gender" value={user.Gender} onChange={onChange} />
+                </div>
+              </div>
+              <div className="modal-body row">
+                <div className="col-md-6">
+                  <Button type="submit" className="btn btn-info mb-1" block><span>Save</span></Button>
+                </div>
+                <div className="col-md-6">
+                  <Button onClick={toggle} className="btn btn-info mb-1" block><span>Cancel</span></Button>
+                </div>
+              </div>
+
+
+            </Form>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+
+        </ModalFooter>
+      </Modal>
         </div>  
     
       )  
