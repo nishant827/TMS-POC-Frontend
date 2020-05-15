@@ -95,7 +95,7 @@ function Header() {
   }
 
   return (
-    <nav className="navbar navbar-dark bg-dark">
+    <nav className="navbar navbar-dark bg-dark" style={{marginTop:"-49px"}}>
       <h1>
         <Link className="navbar-brand" to="/">
           5G TMC
