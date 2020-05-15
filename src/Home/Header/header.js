@@ -20,11 +20,11 @@ function Header() {
   if (role === "SA") {
     header = (
       <Fragment>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link" to="/technision">
             Technician
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link className="nav-link" to="/createuser">
             Users
@@ -50,11 +50,11 @@ function Header() {
   } else if (role === "ZH") {
     header = (
       <Fragment>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link" to="/technision">
             Technician
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link className="nav-link" to="/createuser">
             Users
@@ -82,7 +82,7 @@ function Header() {
       <Fragment>
         <li className="nav-item">
           <Link className="nav-link" to="/tasklist">
-            Sites
+            Tasks
           </Link>
         </li>
         <li className="nav-item">
@@ -106,11 +106,11 @@ function Header() {
           header
         ) : (
           <Fragment>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/signup">
                 Register
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link className="nav-link" to="/login">
                 Login
