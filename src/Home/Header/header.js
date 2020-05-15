@@ -31,15 +31,15 @@ function Header() {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/createtask">
+          <Link className="nav-link" to="/tasklist">
             Tasks
           </Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link" to="/tasklist">
             Sites
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link className="nav-link" onClick={SignOut} to="/login">
             SignOut
@@ -61,15 +61,15 @@ function Header() {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/createtask">
+          <Link className="nav-link" to="/tasklist">
             Tasks
           </Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link" to="/tasklist">
             Sites
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link className="nav-link" onClick={SignOut} to="/login">
             SignOut

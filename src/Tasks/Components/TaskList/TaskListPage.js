@@ -1,9 +1,10 @@
 import React, { Fragment, useState,useEffect } from "react";
+// import { Badge, CardHeader, Pagination, PaginationItem, PaginationLink, Table ,Modal, ModalHeader, ModalBody, ModalFooter, Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import axios from "axios";
-
+import CreateTaskPage from "../CreateTask/CreateTaskPage";
 
 const token=localStorage.getItem('token');
 const TaskListPage = (props) => {
@@ -48,6 +49,7 @@ const TaskListPage = (props) => {
   return (
     <Fragment>
         <h1 className="large text-primary">Task List</h1>
+        <button className='btn btn-primary'>Add Task</button>
         <table className="table">
             <thead>
                 <tr>

@@ -30,8 +30,8 @@ function App() {
           <Route component={LoginPage} path="/login" exact />
           <Route component={SignupPage} path="/signup" exact />
           <PrivateRoute component={ZonalHeadOperations} path="/technision" exact />
-          <PrivateRoute component={CreateTaskPage } path='/createtask' exact />
-          <PrivateRoute component={UpdateTaskPage} path='/updatetask/:id' exact />
+          <Route component={CreateTaskPage } path='/createtask' exact />
+          <Route component={UpdateTaskPage} path='/updatetask/:id' exact />
           <PrivateRoute component={TaskListPage} path='/tasklist' exact />
           <Route component={Dashboard} path='/dashboard' exact />
           <Route component={LoginPage} path='/logout' exact />
