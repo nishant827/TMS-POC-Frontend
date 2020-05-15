@@ -131,7 +131,7 @@ function UserList(props) {
     
                 <CardBody>  
                 <Button style={{"background":"#0366ee"}} onClick={toggle}>Add User</Button>
-                  <Table hover bordered striped responsive size="sm" style={{"margin-top": "6px"}}>  
+                  <Table hover bordered striped responsive size="sm" style={{"marginTop": "6px"}}>  
     
                     <thead>  
     
@@ -173,9 +173,9 @@ function UserList(props) {
 
                             <td>{item.age}</td>
     
-                            <td>{item.contactDetails.countryCode}</td>  
+                            <td>{item.contactDetails ? item.contactDetails.countryCode : null}</td>  
     
-                            <td>{item.contactDetails.mobileNo}</td>  
+                            <td>{item.contactDetails ? item.contactDetails.mobileNo : null}</td>  
     
                             <td>  
     

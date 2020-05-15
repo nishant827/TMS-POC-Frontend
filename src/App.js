@@ -16,6 +16,7 @@ import Dashboard from './Profile/Components/Dashboard/Dashboard';
 import CreateUser from './Users/Components/CreateUser/CreateUser';
 import UserList from './Users/Components/UserList/UserList';
 import UpdateUser from './Users/Components/EditUser/EditUser';
+import PrivateRoute from './routing/PrivateRoute';
 //app.js is calling
 
 function App() {
@@ -28,15 +29,15 @@ function App() {
           <Route component={HomePage} path="/" exact />
           <Route component={LoginPage} path="/login" exact />
           <Route component={SignupPage} path="/signup" exact />
-          <Route component={ZonalHeadOperations} path="/technision" exact />
-          <Route component={CreateTaskPage } path='/createtask' exact />
-          <Route component={UpdateTaskPage} path='/updatetask/:id' exact />
-          <Route component={TaskListPage} path='/tasklist' exact />
+          <PrivateRoute component={ZonalHeadOperations} path="/technision" exact />
+          <PrivateRoute component={CreateTaskPage } path='/createtask' exact />
+          <PrivateRoute component={UpdateTaskPage} path='/updatetask/:id' exact />
+          <PrivateRoute component={TaskListPage} path='/tasklist' exact />
           <Route component={Dashboard} path='/dashboard' exact />
           <Route component={LoginPage} path='/logout' exact />
-          <Route component={CreateUser} path="/createuser" exact/>
-          <Route component={UserList} path="/userlist" exact/>
-          <Route component={UpdateUser} path="/editUser/:id" exact/>
+          <PrivateRoute component={CreateUser} path="/createuser" exact/>
+          <PrivateRoute component={UserList} path="/userlist" exact/>
+          <PrivateRoute component={UpdateUser} path="/editUser/:id" exact/>
           <Redirect from="*" to='/' />   
           </Switch>
         <Footer/>
