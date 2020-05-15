@@ -4,6 +4,7 @@ import { Badge, CardHeader, Pagination, PaginationItem, PaginationLink, Table ,M
 import axios from 'axios';  
 import { useState, useEffect } from 'react' 
 import Select from 'react-select';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 function UserList(props) {  
 
   const [data, setData] = useState([]); 
@@ -52,6 +53,12 @@ function UserList(props) {
     axios.post(apiUrl, data, { headers: { "Authorization": `${token}` } })
 
       .then((result) => {
+        NotificationManager.success('Success message', 'User added successfully');
+        // console.log(NotificationManager);
+        setuser({
+          firstName: '', lastName: '', email: '', password: '', age: '', countryCode: '', mobileNo: "",
+          Gender: "", role: ""
+        })
         GetData();
         // props.history.push('/userlist')
 

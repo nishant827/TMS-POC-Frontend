@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Select from 'react-select';
 import axios from 'axios';
-
+import {NotificationContainer, NotificationManager} from 'react-notifications'
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 function Createuser(props) {
@@ -43,7 +43,7 @@ function Createuser(props) {
         axios.post(apiUrl, data, { headers: {"Authorization" : `${token}`} })
 
             .then((result) => {
-           
+               
                 props.history.push('/userlist')
 
             });
