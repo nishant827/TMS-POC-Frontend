@@ -1,11 +1,13 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Select from 'react-select';
+import axios from 'axios';  
 
 
 const UpdateTaskPage = (props) => {
+  //define state
   const [formData, setFormData] = useState({
     towerId: "",
     address: "",
@@ -13,42 +15,66 @@ const UpdateTaskPage = (props) => {
     taskTitle: "",
     taskDescription: "",
     technicianName: null,
-    technicians: [
-      { value: 'sam', label:'Sam' },
-      { value: 'Smith', label: 'Smith'},
-      {value: 'Karen', label: 'Karen'}],
+    technicians:[
+      { id: 1, value: 'sam',  label: 'Sam'},
+      { id:2,value: 'Smith', label: 'Smith'},
+      {id:3,value: 'Karen', label: 'Karen'}],
     startDate: "",
     estimatedEndDate: "",
     status: "",
-    item: null,
-    options: [
-      { value: 'receiver', label: 'Receiver' },
-      { value: 'transmitter', label: 'Transmitter' },
-      { value: 'battery', label: 'Battery' },
-    ],
-});
-
-  const { towerId, address, taskType, taskTitle, taskDescription, technicianName,technicians, startDate, estimatedEndDate, status,item,options } = formData;
-
+    // item: null,
+    items: null,
+  });
+  
+    // const Url = "http://localhost:3030/api/task/" + props.match.params.id;
+    const url='http://localhost:3030/api/task/list';
+    const token=localStorage.getItem('token');
+    const technicians1=[
+      { id: 1, value: 'sam',  label: 'Sam'},
+      { id:2,value: 'Smith', label: 'Smith'},
+      {id:3,value: 'Karen', label: 'Karen'}];
+   console.log("formData",formData);
+  const { towerId, address, taskType, taskTitle, taskDescription, technicianName,technicians,
+     startDate, estimatedEndDate, status,item,items } = formData;
+    //get data from API 
+    useEffect(() =>{
+      const getTaskData = async () => {  
+        const apiResult = await axios(url,{ headers: {"Authorization" : `${token}`} }); 
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$",apiResult);
+        setFormData(apiResult.data.data[0]);  
+      };  
+      getTaskData();
+     },[]);
+ 
   const onChange = (e) => {
-    console.log(e);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  //update data on submit
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
+    const apiInputData= {
+      towerId,
+      address,
+      taskType,
+      taskTitle,
+      taskDescription,
+      technicianName,
+      startDate,
+      estimatedEndDate,
+      item
+    }; 
+    axios.put(`http://localhost:3030/api/task/update/${props.match.params.id}`, apiInputData,{ headers: {"Authorization" : `${token}`} })
+     .then((result) => {
+        props.history.push('/dashboard')  
+     });  
       alert("Task Updated successfully!!");
   };
-  
+  //functions to handle select fields
   const handleTechnicianSelectChange = e => {
-    console.log(technicianName);
-    console.log(e, e[0]);
-    setFormData({ ...formData, [technicianName]: e[0].value });
-    console.log(technicianName)
+    setFormData({ ...formData, ['technicianName']: e });
   };
   const handleItemSelectChange = e => {
-    setFormData({ ...formData, [item]: e.value });
+    setFormData({ ...formData, ['item']: e });
   };
   
   return (
@@ -66,7 +92,7 @@ const UpdateTaskPage = (props) => {
                   className= "form-control"
                   placeholder="TowerId"
                   name="towerId"
-                  value={ towerId}
+                  value={ formData.towerId}
                   onChange={(e) => onChange(e)}
                 />
               </div>
@@ -78,7 +104,7 @@ const UpdateTaskPage = (props) => {
                   className= "form-control"
                   placeholder="Site address"
                   name="address"
-                  value={address}
+                  value={formData.address}
                   onChange={(e) => onChange(e)}
                 />
               </div>
@@ -93,7 +119,7 @@ const UpdateTaskPage = (props) => {
                   className="form-control"
                   placeholder="task type"
                   name="taskType"
-                  value={taskType}
+                  value={formData.taskType}
                   onChange={(e) => onChange(e)}
                 />
               </div>
@@ -105,7 +131,7 @@ const UpdateTaskPage = (props) => {
                 className= "form-control input-lg"
                 placeholder="task title"
                 name="taskTitle"
-                value={taskTitle}
+                value={formData.taskTitle}
                 onChange={(e) => onChange(e)}
               />
             </div>
@@ -119,7 +145,7 @@ const UpdateTaskPage = (props) => {
                   className= "form-control input-lg"
                   placeholder="task description"
                   name="taskDescription"
-                  value={taskDescription}
+                  value={formData.taskDescription}
                   onChange={(e) => onChange(e)}
                 />
               </div>
@@ -130,8 +156,8 @@ const UpdateTaskPage = (props) => {
                 name="technicians"
                 placeholder="select Technician"
                 onChange={(e)=>handleTechnicianSelectChange(e)}
-                options={technicians}
-                isMulti
+                options={technicians1}
+                isMulti={true}
               />
               </div>
             </div>
@@ -144,7 +170,7 @@ const UpdateTaskPage = (props) => {
                   className= "form-control input-lg"
                   placeholder="start date"
                   name="startDate"
-                  value={startDate}
+                  value={formData.startDate}
                   onChange={(e) => onChange(e)}
                 />
               </div>
@@ -156,7 +182,7 @@ const UpdateTaskPage = (props) => {
                   className= "form-control input-lg"
                   placeholder="estimated End Date"
                   name="estimatedEndDate"
-                  value={estimatedEndDate}
+                  value={formData.estimatedEndDate}
                   onChange={(e) => onChange(e)}
                 />
               </div>
@@ -170,7 +196,7 @@ const UpdateTaskPage = (props) => {
                   className= "form-control input-lg"
                   placeholder="status"
                   name="status"
-                  value={status}
+                  value={formData.status}
                   onChange={(e) => onChange(e)}
                 />
               </div>
@@ -179,7 +205,7 @@ const UpdateTaskPage = (props) => {
               <Select
                 placeholder="select item"
                 onChange={(e)=>handleItemSelectChange(e)}
-                options={options}
+                options={ formData.items}
                 isMulti
               />
             </div>

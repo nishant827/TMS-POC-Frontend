@@ -194,6 +194,6 @@ function Edituser(props) {
 
   
 
-export default Edituser  
+export default Edituser;
 
 
