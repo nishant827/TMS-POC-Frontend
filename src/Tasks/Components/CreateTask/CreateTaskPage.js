@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Select from 'react-select';
+import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux';
+import { CreateTask } from "../../TaskActions";
 
-const CreateTaskPage = () => {
+const CreateTaskPage = (props) => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     towerId: "",
     address: "",
@@ -13,27 +17,63 @@ const CreateTaskPage = () => {
     taskDescription: "",
     technicianName: null,
     technicians: [
-      { value: 'sam', label:'Sam' },
-      { value: 'Smith', label: 'Smith'},
-      {value: 'Karen', label: 'Karen'}],
+      { id: 1, value: 'sam',  label: 'Sam'},
+      { id:2,value: 'Smith', label: 'Smith'},
+      {id:3,value: 'Karen', label: 'Karen'}],
     startDate: "",
     estimatedEndDate: "",
     status: "",
   });
-
+  const token=localStorage.getItem('token');
   const { towerId, address, taskType, taskTitle, taskDescription, technicianName, technicians,startDate, estimatedEndDate, status } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
+    console.log(formData);
     e.preventDefault();
       console.log( towerId, address, taskType, taskTitle, taskDescription, technicianName, startDate, estimatedEndDate, status);
+      const apiInputData= {
+        towerId,
+        address,
+        taskType,
+        taskTitle,
+        taskDescription,
+        technicianName,
+        startDate,
+        estimatedEndDate
+      };
+      console.log('=============>',JSON.stringify(apiInputData));
+      try {
+        let { status, data } = await axios.post(
+          "http://localhost:3030/api/task/new",
+          {
+            towerId, address, taskType, taskTitle, taskDescription, technicians,technicianName, startDate, estimatedEndDate
+          },
+          { headers: {"Authorization" : `${token}`} }
+        );
+        if (status === 200) {
+        //   dispatch(CreateTask(data.result.data.user));
+        //   localStorage.setItem("token", data.result.data.token);
+          props.history.push("/dashboard");
+        } else {
+          alert("Task not Created");
+          props.history.push("/dashboard");
+        }
+      } catch (e) {
+        console.log("what is the error",e);
+        alert("Error while creating task");
+        props.history.push("/dashboard");
+      }
+      
       alert("Task created successfully!!");
   };
   const handleTechnicianSelectChange = e => {
-    setFormData({ ...formData, [technicianName]: e[0].value });
+    console.log(e);
+    
+    setFormData({ ...formData, ['technicianName']: e });
   };
   return (
     <Fragment>
@@ -113,9 +153,10 @@ const CreateTaskPage = () => {
                 <Select
                   name="technicians"
                   placeholder="select Technician"
-                  onChange={(e)=>handleTechnicianSelectChange(e)}
+                  onChange={handleTechnicianSelectChange}
                   options={technicians}
                   isMulti= {true}
+                  removeSelected={false}
                 />
               </div>
             </div>
