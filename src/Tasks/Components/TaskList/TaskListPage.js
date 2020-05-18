@@ -5,13 +5,23 @@ import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import axios from "axios";
 import CreateTaskPage from "../CreateTask/CreateTaskPage";
+import { useSelector } from "react-redux";
+import { Modal, Button}  from "react-bootstrap";
 
-const token=localStorage.getItem('token');
+// const token=localStorage.getItem('token');
 const TaskListPage = (props) => {
+  const userData = useSelector((state) => state.loggedUser);
+  const token = userData.user.token;
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   //Intialize state
   const [formData, setFormData] = useState([]);
   //get token
-  const token=localStorage.getItem('token');
+  // const token=localStorage.getItem('token');
   //get data from api and assign to state
   const GetData = async () => {  
     const result = await axios('http://localhost:3030/api/task/list',{ headers: {"Authorization" : `${token}`} }); 
@@ -19,13 +29,7 @@ const TaskListPage = (props) => {
     setFormData(result.data.data);  
   };  
   useEffect(() => {  
-
-   
-
-  
-
     GetData();  
-
   }, []); 
   console.log("formdata",formData);
   //delete task 
@@ -49,7 +53,15 @@ const TaskListPage = (props) => {
   return (
     <Fragment>
         <h1 className="large text-primary">Task List</h1>
-        <button className='btn btn-primary'>Add Task</button>
+        <button className='btn btn-primary' onClick={handleShow}>Add Task</button>
+        <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <CreateTaskPage />
+        </Modal.Body>
+      </Modal>
         <table className="table">
             <thead>
                 <tr>
