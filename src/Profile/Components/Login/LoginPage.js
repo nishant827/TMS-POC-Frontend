@@ -29,9 +29,14 @@ const LoginPage = (props) => {
         }
       );
       if (status === 200) {
+        data.result.data.user.token = data.result.data.token;
         dispatch(signIn(data.result.data.user));
-        localStorage.setItem("token", data.result.data.token);
-        props.history.push("/dashboard");
+        // localStorage.setItem("token", data.result.data.token);
+        if (data.result.data.user.role === "TECH") {
+          props.history.push("/tasklist");
+        } else {
+          props.history.push("/userlist");
+        }
       } else {
         alert("Wrong password");
         props.history.push("/login");
