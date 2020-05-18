@@ -241,7 +241,7 @@ function UserList(props) {
               </div>
               <div className="modal-body row">
                 <div className="col-md-6">
-                  <Button type="submit" className="btn btn-info mb-1" block><span>Save</span></Button>
+                  <Button type="submit" onClick={toggle} className="btn btn-info mb-1" block><span>Save</span></Button>
                 </div>
                 <div className="col-md-6">
                   <Button onClick={toggle} className="btn btn-info mb-1" block><span>Cancel</span></Button>
