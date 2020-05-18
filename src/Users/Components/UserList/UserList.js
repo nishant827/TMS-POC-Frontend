@@ -1,30 +1,44 @@
-import React from 'react'  
+import React from 'react'
 // import { } from 'reactstrap'; 
-import { Badge, CardHeader, Pagination, PaginationItem, PaginationLink, Table ,Modal, ModalHeader, ModalBody, ModalFooter, Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-import axios from 'axios';  
-import { useState, useEffect } from 'react' 
+import { Badge, CardHeader, Pagination, PaginationItem, PaginationLink, Table, Modal, ModalHeader, ModalBody, ModalFooter, Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import axios from 'axios';
+import { useState, useEffect } from 'react'
 import Select from 'react-select';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-function UserList(props) {  
-
-  const [data, setData] = useState([]); 
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+function UserList(props) {
+  const [data, setData] = useState([]);
   const [modal, setModal] = useState(false);
-  const toggle = () => setModal(!modal); 
-  const token=localStorage.getItem('token');
+  const [loading, setLoading] = useState(false);
   const [user, setuser] = useState({
     firstName: '', lastName: '', email: '', password: '', age: '', countryCode: '', mobileNo: "",
     Gender: "", role: ""
   });
+  const toggle = () => setModal(!modal);
+  const token = localStorage.getItem('token');
+
   const roles = [
-    { value: 'SA', label: 'SA' },
-    { value: 'ZH', label: 'ZH' },
-    { value: 'TECH', label: 'TECH' }]
+    { value: 'SuperAdmin', label: 'SuperAdmin' },
+    { value: 'ZonalHead', label: 'ZonalHead' },
+    { value: 'Technision', label: 'Technision' }];
   const [showLoading, setShowLoading] = useState(false);
-  const GetData = async () => {  
-    const result = await axios('http://localhost:3030/api/user/list',{ headers: {"Authorization" : `${token}`} }); 
-    console.log("@@@@@@@@@@@@@@@@result@@@@@@@",result.data.data); 
-    setData(result.data.data);  
-  };  
+  const GetData = async () => {
+    const result = await axios('http://localhost:3030/api/user/list', { headers: { "Authorization": `${token}` } });
+    console.log("@@@@@@@@@@@@@@@@result@@@@@@@", result.data.data);
+    setData(result.data.data);
+  };
+  const searchData = async (searchVal) => {
+    console.log("searchVal", searchVal);
+    setLoading(true);
+    axios
+      .get(`http://localhost:3030/api/user/search?searchedText=${searchVal}`, { headers: { "Authorization": `${token}` } })
+      .then(res => {
+        setData(res.data.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
   const apiUrl = "http://localhost:3030/api/user/register";
 
   const handleUserSelectChange = e => {
@@ -36,7 +50,7 @@ function UserList(props) {
     console.log("Insertuser", user);
     e.preventDefault();
 
-   
+
 
     const data = {
       firstName: user.firstName, lastName: user.lastName, email: user.email,
@@ -67,150 +81,138 @@ function UserList(props) {
   };
 
   const onChange = (e) => {
-
-    e.persist();
-
-
-
+     e.persist();
     setuser({ ...user, [e.target.name]: e.target.value });
-
   }
+  useEffect(() => {
+     GetData();
+    }, []);
+  const deleteUser = (id) => {
+      axios.delete('http://localhost:3030/api/user/remove/' + id, { headers: { "Authorization": `${token}` } })
+        .then((result) => {
+        GetData()
+        props.history.push('/userlist');
+
+      });
+
+  };
+
+  const editUser = (id) => {
+    console.log("editUser", id);
+    props.history.push({
+
+      pathname: '/editUser/' + id
+
+    });
+
+  };
 
 
 
-  useEffect(() => {  
+  return (
 
-   
+    <div className="animated fadeIn">
 
-  
+      <Row>
 
-    GetData();  
+        <Col>
 
-  }, []);  
-  const deleteUser = (id) => {  
-    
-        
-    
-        axios.delete('http://localhost:3030/api/user/remove/' + id,{ headers: {"Authorization" : `${token}`} })  
-    
-          .then((result) => {  
-            GetData()
-            props.history.push('/userlist')  ;
-    
-          });  
-    
-      };  
-    
-      const editUser = (id) => {  
-        console.log("editUser",id);
-        props.history.push({  
-    
-          pathname: '/editUser/' + id  
-    
-        });  
-    
-      };  
-    
-      
-    
-      return (  
-    
-        <div className="animated fadeIn">  
-    
-          <Row>  
-    
-            <Col>  
-    
-              <Card>  
-    
-                <CardHeader>  
-    
-                   
-    
-                  </CardHeader>  
-    
-                <CardBody>  
-                <Button style={{"background":"#0366ee"}} onClick={toggle}>Add User</Button>
-                  <Table hover bordered striped responsive size="sm" style={{"marginTop": "6px"}}>  
-    
-                    <thead>  
-    
-                      <tr>  
-    
-                        <th>Firstname</th>  
-    
-                        <th>Lastname</th>  
-    
-                        <th>Email</th>  
-    
-                        <th>Age</th>  
-    
-                        <th>Country Code</th>  
-                        
-                       <th>MobileNo</th>  
-                      
-                       <th>Gender</th>
+          <Card>
 
-                       <th>Role</th>
-                        <th>Action</th>
-                      </tr>  
-    
-                    </thead>  
-    
-                    <tbody>  
-    
-                      {  
-    
-                        data.map((item, idx) => {  
-    
-                          return <tr key={item._id}>  
-    
-                            <td>{item.firstName}</td>  
-    
-                            <td>{item.lastName}</td>  
-    
-                            <td>{item.email}</td>  
+            <CardHeader>
 
-                            <td>{item.age}</td>
-    
-                            <td>{item.contactDetails ? item.contactDetails.countryCode : null}</td>  
-    
-                            <td>{item.contactDetails ? item.contactDetails.mobileNo : null}</td>  
-    
-                            <td>  
-    
-                              {item.Gender}  
-    
-                            </td>  
+
+
+            </CardHeader>
+
+            <CardBody>
+
+              <Button style={{ "background": "#0366ee" }} onClick={toggle}>Add User</Button>
+              <input
+                type="text"
+                placeholder="Search Users"
+                onChange={e => searchData(e.target.value)}
+              />
+              <Table hover bordered striped responsive size="sm" style={{ "marginTop": "6px" }}>
+
+                <thead>
+
+                  <tr>
+
+                    <th>Firstname</th>
+
+                    <th>Lastname</th>
+
+                    <th>Email</th>
+
+                    <th>Age</th>
+
+                    <th>Country Code</th>
+
+                    <th>MobileNo</th>
+
+                    <th>Gender</th>
+
+                    <th>Role</th>
+                    <th>Action</th>
+                  </tr>
+
+                </thead>
+
+                <tbody>
+
+                  {
+
+                    data.map((item, idx) => {
+
+                      return <tr key={item._id}>
+
+                        <td>{item.firstName}</td>
+
+                        <td>{item.lastName}</td>
+
+                        <td>{item.email}</td>
+
+                        <td>{item.age}</td>
+
+                        <td>{item.contactDetails ? item.contactDetails.countryCode : null}</td>
+
+                        <td>{item.contactDetails ? item.contactDetails.mobileNo : null}</td>
+
+                        <td>
+
+                          {item.Gender}
+
+                        </td>
                         <td>{item.role}</td>
-    
-                            <td>  
-    
-                              <div >  
-    
-                                <Button  style={{"background":"#0366ee"}}  onClick={() => { editUser(item._id) }}>Edit</Button>  
+
+                        <td>
+
+                          <div >
+
+                            <Button style={{ "background": "#0366ee" }} onClick={() => { editUser(item._id) }}>Edit</Button>
                                  &nbsp;
-                                <Button  style={{"background":"#0366ee"}} onClick={() => { deleteUser(item._id) }}>Delete</Button>  
-    
-                              </div>  
-    
-                            </td>  
-    
-                          </tr>  
-    
-                        })}  
-    
-                    </tbody>  
-    
-                  </Table>  
-                    </CardBody>  
-    
-              </Card>  
-    
-            </Col>  
-    
-          </Row>  
-          <Modal isOpen={modal} toggle={toggle}>
+                                <Button style={{ "background": "#0366ee" }} onClick={() => { deleteUser(item._id) }}>Delete</Button>
+
+                          </div>
+
+                        </td>
+
+                      </tr>
+
+                    })}
+
+                </tbody>
+
+              </Table>
+            </CardBody>
+
+          </Card>
+
+        </Col>
+
+      </Row>
+      <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Create user</ModalHeader>
         <ModalBody>
           <div className="app flex-row align-items-center">
@@ -254,10 +256,10 @@ function UserList(props) {
 
         </ModalFooter>
       </Modal>
-        </div>  
-    
-      )  
-    
-    }  
-    
-export default UserList ; 
+    </div>
+
+  )
+
+}
+
+export default UserList; 
