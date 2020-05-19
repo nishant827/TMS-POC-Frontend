@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react'  
+import { useSelector } from "react-redux";
 
 import axios from 'axios';  
 
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';  
 
 function Edituser(props) {  
+  const userData = useSelector((state) => state.loggedUser);
+  const token = userData.user.token;
         console.log()
         const [user, setuser]=  useState({ firstName: '', lastName: '', email: '', password: '', age: '',  countryCode: '', mobileNo: "" , 
         Gender: "" ,role:""
         });  
 
         const Url = "http://localhost:3030/api/user/" + props.match.params.id;  
-        const token=localStorage.getItem('token');
+        // const token=localStorage.getItem('token');
         
 
         useEffect(() => {  

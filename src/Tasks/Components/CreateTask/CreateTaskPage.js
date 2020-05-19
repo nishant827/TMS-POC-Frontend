@@ -59,7 +59,8 @@ const CreateTaskPage = (props) => {
         if (status === 200) {
         //   dispatch(CreateTask(data.result.data.user));
         //   localStorage.setItem("token", data.result.data.token);
-          props.history.push("/dashboard");
+          // props.history.push("/dashboard");
+          props.handleClose();
         } else {
           alert("Task not Created");
           props.history.push("/dashboard");
