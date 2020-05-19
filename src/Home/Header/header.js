@@ -2,7 +2,11 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "../../Profile/actions/index";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'
+import  { Redirect } from 'react-router-dom'
 function Header() {
+ 
   const user = useSelector((state) => state.loggedUser);
 
   const dispatch = useDispatch();
@@ -11,7 +15,27 @@ function Header() {
     console.log("calling signout function");
     dispatch(signOut());
     localStorage.removeItem("token");
-    console.log("header_page", user.isLogged);
+    console.log("logout is calling")
+    return <Redirect to='/login'  />
+   };
+  const  Nobtn=()=>{
+    console.log("no logout is calling");
+  }
+  const submit = () => {
+    confirmAlert({
+      title: 'Confirm to Logout',
+      message: `Are you sure want to leave this`,
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () =>SignOut()
+        },
+        {
+          label: 'No',
+          onClick: () => Nobtn()
+        }
+      ]
+    })
   };
 
   let header;
@@ -41,7 +65,7 @@ function Header() {
           </Link>
         </li> */}
         <li className="nav-item">
-          <Link className="nav-link" onClick={SignOut} to="/login">
+          <Link className="nav-link" onClick={submit}>
             SignOut
           </Link>
         </li>

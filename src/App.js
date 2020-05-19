@@ -24,9 +24,10 @@ function App() {
     <div className="App">
       <Router>
         <div>
-        <Header />
+        <Header  />
         <Switch>
           <Route component={HomePage} path="/" exact />
+     
           <Route component={LoginPage} path="/login" exact />
           <Route component={SignupPage} path="/signup" exact />
           <PrivateRoute component={ZonalHeadOperations} path="/technision" exact />
