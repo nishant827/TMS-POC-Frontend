@@ -5,8 +5,11 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import Select from 'react-select';
+
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 function UserList(props) {
+  const userData = useSelector((state) => state.loggedUser);
+  const token = userData.user.token;
   const [data, setData] = useState([]);
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -15,9 +18,8 @@ function UserList(props) {
     Gender: "", role: ""
   });
   const toggle = () => setModal(!modal);
-  // const token = localStorage.getItem('token');
-  const userToken = useSelector((state) => state.loggedUser);
-  const token =  userToken.user.token;
+
+
   const roles = [
     { value: 'SuperAdmin', label: 'SuperAdmin' },
     { value: 'ZonalHead', label: 'ZonalHead' },

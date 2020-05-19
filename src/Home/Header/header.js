@@ -98,7 +98,7 @@ function Header() {
     <nav className="navbar navbar-dark bg-dark" style={{marginTop:"-49px"}}>
       <h1>
         <Link className="navbar-brand" to="/">
-          5G TMS
+          TMS
         </Link>
       </h1>
       <ul className="nav">

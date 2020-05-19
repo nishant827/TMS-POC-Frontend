@@ -9,6 +9,8 @@ import { CreateTask } from "../../TaskActions";
 
 const CreateTaskPage = (props) => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.loggedUser);
+  const token =  user.user.token;
   const [formData, setFormData] = useState({
     towerId: "",
     address: "",
@@ -24,7 +26,7 @@ const CreateTaskPage = (props) => {
     estimatedEndDate: "",
     status: "",
   });
-  const token=localStorage.getItem('token');
+  // const token=localStorage.getItem('token');
   const { towerId, address, taskType, taskTitle, taskDescription, technicianName, technicians,startDate, estimatedEndDate, status } = formData;
 
   const onChange = (e) => {
@@ -77,18 +79,16 @@ const CreateTaskPage = (props) => {
   };
   return (
     <Fragment>
-      <h1 className="large text-primary">Create Task</h1>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
       <div className="row">
-        <div className="col-sm-2"></div>
-        <div className="col-sm-8">
+        <div className="col-sm-12">
           <div className= "row" >
             <div className= "col-sm-6">
               <div className="form-group">
                 <input
                   type="text"
                   className= "form-control"
-                  placeholder="TowerId"
+                  placeholder="Site Name"
                   name="towerId"
                   value={ towerId}
                   onChange={(e) => onChange(e)}
