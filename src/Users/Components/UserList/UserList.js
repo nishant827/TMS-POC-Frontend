@@ -5,21 +5,43 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import Select from 'react-select';
-
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 function UserList(props) {
   const userData = useSelector((state) => state.loggedUser);
   const token = userData.user.token;
   const [data, setData] = useState([]);
   const [modal, setModal] = useState(false);
+  const [delmodal, setDelModal] = useState(false);
+  const [message,setMessage]=useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setuser] = useState({
     firstName: '', lastName: '', email: '', password: '', age: '', countryCode: '', mobileNo: "",
     Gender: "", role: ""
   });
   const toggle = () => setModal(!modal);
+  const deltoggle=()=> setDelModal(!delmodal);
+  const Nobtn=()=>{
 
-
+  }
+  const submit = (data) => {
+    confirmAlert({
+      title: 'Confirm to Delete',
+      message: `Are you sure want to delete ${data.firstName}`,
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => deleteUser(data._id)
+        },
+        {
+          label: 'No',
+          onClick: () => Nobtn()
+        }
+      ]
+    
+    })
+  };
   const roles = [
     { value: 'SuperAdmin', label: 'SuperAdmin' },
     { value: 'ZonalHead', label: 'ZonalHead' },
@@ -93,12 +115,23 @@ function UserList(props) {
   useEffect(() => {
      GetData();
     }, []);
+    const redirect=()=>{
+      setDelModal(false)
+      GetData()
+    }
   const deleteUser = (id) => {
       axios.delete('http://localhost:3030/api/user/remove/' + id, { headers: { "Authorization": `${token}` } })
         .then((result) => {
-        GetData()
-        props.history.push('/userlist');
+          setDelModal(true);
+          setMessage(true);
+          GetData()
+          deltoggle();
+        
 
+        // props.history.push('/userlist');
+
+      }).catch((err)=>{
+        setDelModal(false)
       });
 
   };
@@ -147,6 +180,7 @@ function UserList(props) {
             <CardBody>
 
               <Button style={{ "background": "#0366ee" }} onClick={toggle}>Add User</Button>
+              {/* <Button onClick={submit}>Confirm dialog</Button> */}
               <input
                 type="text"
                 placeholder="Search Users"
@@ -211,7 +245,7 @@ function UserList(props) {
 
                             <Button style={{ "background": "#0366ee" }} onClick={() => { editUser(item._id) }}>Edit</Button>
                                  &nbsp;
-                                <Button style={{ "background": "#0366ee" }} onClick={() => { deleteUser(item._id) }}>Delete</Button>
+                                <Button style={{ "background": "#0366ee" }} onClick={() => { submit(item) }}>Delete</Button>
 
                           </div>
 
@@ -273,6 +307,15 @@ function UserList(props) {
         </ModalBody>
         <ModalFooter>
 
+        </ModalFooter>
+      </Modal>
+      <Modal isOpen={delmodal} toggle={deltoggle}>
+        <ModalHeader toggle={deltoggle}></ModalHeader>
+        <ModalBody>
+          {message?"User deleted successfully":"Something went wrong"}
+        </ModalBody>
+        <ModalFooter>
+        <Button color="secondary" onClick={redirect}>Close</Button>
         </ModalFooter>
       </Modal>
     </div>

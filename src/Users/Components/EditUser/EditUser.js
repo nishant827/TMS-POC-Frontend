@@ -2,24 +2,29 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from "react-redux";
 
 import axios from 'axios';  
-
-import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';  
+import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';  
 
 
 
 function Edituser(props) {  
   const userData = useSelector((state) => state.loggedUser);
+ 
+  const [modal, setModal] = useState(false);
+  const [message,setMessage]=useState(false)
   const token = userData.user.token;
+ 
         console.log()
         const [user, setuser]=  useState({ firstName: '', lastName: '', email: '', password: '', age: '',  countryCode: '', mobileNo: "" , 
         Gender: "" ,role:""
         });  
 
         const Url = "http://localhost:3030/api/user/" + props.match.params.id;  
-       
+        const toggle = () =>  setModal(!modal);
+        const redirect=()=> props.history.push('/userlist') ;
+        
         // const token=localStorage.getItem('token');
         
-
+        // const [modal, setModal] = useState(false);
         useEffect(() => {  
 
           const GetData = async () => {  
@@ -54,17 +59,24 @@ function Edituser(props) {
            console.log("#####Data#####",data);
            console.log("$$$token$$",token);
            console.log("props.match.params.id",props.match.params.id);
+          
           axios.put(`http://localhost:3030/api/user/update/${props.match.params.id}`, data,{ headers: {"Authorization" : `${token}`} })  
 
             .then((result) => {  
+              console.log("calling result@@@@@@@@@@",result);
+        
+              setMessage(true)
+              // setModal(!modal)
+              // props.history.push('/userlist')  
 
-              props.history.push('/userlist')  
-
+            }).catch((err)=>{
+            
+              setMessage(false)
             });  
 
         };  
 
-        
+        console.log("message",message);
 
         const onChange = (e) => {  
 
@@ -166,13 +178,13 @@ function Edituser(props) {
 
                             <Col xs="12" sm="6">  
 
-                              <Button type="submit" className="btn btn-info mb-1" block><span>Save</span></Button>  
+                              <Button type="submit" onClick={toggle}  className="btn btn-info mb-1" block><span>Save</span></Button>  
 
                             </Col>  
 
                             <Col xs="12" sm="6">  
 
-                              <Button className="btn btn-info mb-1" block><span>Cancel</span></Button>  
+                              <Button className="btn btn-info mb-1" block ><span>Cancel</span></Button>  
 
                             </Col>  
 
@@ -191,6 +203,15 @@ function Edituser(props) {
                   </Row>  
 
                 </Container>  
+                <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}></ModalHeader>
+        <ModalBody>
+          {message?"User updated successfully":"Something went wrong"}
+        </ModalBody>
+        <ModalFooter>
+        <Button color="secondary" onClick={redirect}>Close</Button>
+        </ModalFooter>
+      </Modal>
 
               </div>  
 
