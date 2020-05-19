@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Select from 'react-select';
 import axios from 'axios';  
-
+import { useSelector, useDispatch } from "react-redux";
 
 const UpdateTaskPage = (props) => {
   //define state
@@ -28,7 +28,9 @@ const UpdateTaskPage = (props) => {
   
     // const Url = "http://localhost:3030/api/task/" + props.match.params.id;
     const url='http://localhost:3030/api/task/list';
-    const token=localStorage.getItem('token');
+    // const token=localStorage.getItem('token');
+     const user = useSelector((state) => state.loggedUser);
+    const token =  user.user.token;
     const technicians1=[
       { id: 1, value: 'sam',  label: 'Sam'},
       { id:2,value: 'Smith', label: 'Smith'},

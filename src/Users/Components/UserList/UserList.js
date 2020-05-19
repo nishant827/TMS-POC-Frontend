@@ -2,7 +2,8 @@ import React from 'react'
 // import { } from 'reactstrap'; 
 import { Badge, CardHeader, Pagination, PaginationItem, PaginationLink, Table, Modal, ModalHeader, ModalBody, ModalFooter, Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import axios from 'axios';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import Select from 'react-select';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 function UserList(props) {
@@ -14,8 +15,9 @@ function UserList(props) {
     Gender: "", role: ""
   });
   const toggle = () => setModal(!modal);
-  const token = localStorage.getItem('token');
-
+  // const token = localStorage.getItem('token');
+  const userToken = useSelector((state) => state.loggedUser);
+  const token =  userToken.user.token;
   const roles = [
     { value: 'SuperAdmin', label: 'SuperAdmin' },
     { value: 'ZonalHead', label: 'ZonalHead' },
@@ -62,7 +64,9 @@ function UserList(props) {
     };
     console.log("apiUrl", apiUrl, "data", data);
 
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
+    // const user = useSelector((state) => state.loggedUser);
+    // const token =  user.user.token;
     console.log("token", token);
     axios.post(apiUrl, data, { headers: { "Authorization": `${token}` } })
 
