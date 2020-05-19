@@ -202,9 +202,19 @@ const CreateTaskPage = (props) => {
               </div>
             </div>
           </div>
+            <div className="row">
+              {/* <div className="col-sm-4"></div> */}
+              <div className="col-sm-12">
+                <input type="submit" className="primary btn btn-primary btn-block " value="Create Task" />
+              </div>
+              {/* <div className="col-sm-4">
+                <button className="btn btn-primary" onClick={() => { props.handleClose() }}>Cancel</button>
+              </div> */}
+              {/* <div className="col-sm-2"></div> */}
+            </div>
         </div>  
         </div>
-        <input type="submit" className="primary btn btn-primary" value="Create Task" />
+        {/* <input type="submit" className="primary btn btn-primary" value="Create Task" /> */}
       </form>
       
     </Fragment>

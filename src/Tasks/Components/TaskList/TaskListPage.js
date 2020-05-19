@@ -85,7 +85,7 @@ const TaskListPage = (props) => {
               {/* <td> { taskrow.technicianName[0].value } </td> */}
               <td>
                 <select>
-                  {taskrow.technicianName[0] ? (
+                  {taskrow.technicianName ? (
                     taskrow.technicianName.map((name, i) => (
                       <option value="">{name.value} </option>
                     ))
