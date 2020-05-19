@@ -64,7 +64,7 @@ const TaskListPage = (props) => {
           <CreateTaskPage handleClose={(e) => handleClose()} />
         </Modal.Body>
       </Modal>
-      <table className="table">
+      <table className="table" style={{marginTop:'40px'}}>
         <thead>
           <tr>
             <th scope="col">Site Id</th>
