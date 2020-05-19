@@ -113,6 +113,19 @@ function UserList(props) {
 
   };
 
+  const checkRole = (role) => {
+    if(role === "ZH"){
+      return "Zonal Head"
+
+    }
+    else if(role === "SA"){
+      return "Super Admin"
+    }
+    else{
+      return "Technician"
+    }
+  }
+
 
 
   return (
@@ -190,7 +203,7 @@ function UserList(props) {
                           {item.Gender}
 
                         </td>
-                        <td>{item.role}</td>
+                        <td>{checkRole(item.role)}</td>
 
                         <td>
 

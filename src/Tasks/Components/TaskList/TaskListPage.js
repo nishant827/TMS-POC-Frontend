@@ -52,58 +52,81 @@ const TaskListPage = (props) => {
 
   return (
     <Fragment>
-        <h1 className="large text-primary">Task List</h1>
-        <button className='btn btn-primary' onClick={handleShow}>Add Task</button>
-        <Modal show={show} onHide={handleClose}>
+      <h1 className="large text-primary">Task List</h1>
+      <button className="btn btn-primary" onClick={handleShow}>
+        Add Task
+      </button>
+      <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create Task</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <CreateTaskPage />
+          <CreateTaskPage handleClose={(e) => handleClose()} />
         </Modal.Body>
       </Modal>
-        <table className="table">
-            <thead>
-                <tr>
-                <th scope="col">Site Id</th>
-                <th scope="col">Site Address</th>
-                <th scope="col">Task Title</th>
-                <th scope="col">Technicians</th>
-                <th scope="col">start Date</th>
-                <th scope="col">End Date</th>
-                <th scope="col"> </th> 
-                </tr>
-            </thead>
-            <tbody>
-            {formData.map((taskrow, index) => (
-              <tr key={taskrow._id}>
-                <td> { taskrow.towerId } </td>
-                <td> {taskrow.address } </td>
-                <td> {taskrow.taskTitle } </td>
-                <td> { taskrow.technicianName[0].value } </td>
-                <td> { taskrow.startDate } </td>
-                <td> { taskrow.estimatedEndDate } </td>
-                <td>  
-                  <div className="btn-group">  
-                    {/* <button 
+      <table className="table" style={{marginTop:'40px'}}>
+        <thead>
+          <tr>
+            <th scope="col">Site Id</th>
+            <th scope="col">Site Address</th>
+            <th scope="col">Task Title</th>
+            <th scope="col">Technicians</th>
+            <th scope="col">start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col"> </th>
+          </tr>
+        </thead>
+        <tbody>
+          {formData.map((taskrow, index) => (
+            <tr key={taskrow._id}>
+              <td> {taskrow.towerId} </td>
+              <td> {taskrow.address} </td>
+              <td> {taskrow.taskTitle} </td>
+              {/* <td> { taskrow.technicianName[0].value } </td> */}
+              <td>
+                <select>
+                  {taskrow.technicianName ? (
+                    taskrow.technicianName.map((name, i) => (
+                      <option value="">{name.value} </option>
+                    ))
+                  ) : (
+                    <option value=""></option>
+                  )}
+                </select>
+              </td>
+              <td> {taskrow.startDate} </td>
+              <td> {taskrow.estimatedEndDate} </td>
+              <td>
+                <div className="btn-group">
+                  {/* <button 
                       className="btn btn-primary" 
                       onClick={() => { editTask(taskrow._id) }}
                       >
                       Edit
                     </button>   */}
-                     <button  style={{"background":"#0366ee"}}  onClick={() => { editTask(taskrow._id) }}>Edit</button> 
-                    <button 
-                      className="btn btn-primary" 
-                      onClick={() => { deleteTask(taskrow._id) }}
-                      >
-                      Delete
-                    </button>  
-                  </div>  
-                </td>  
-              </tr>
-            ))}  
-            </tbody>
-        </table>
+                  <button
+                    // style={{ background: "#0366ee" }}
+                    className='btn btn-primary m-2'
+                    onClick={() => {
+                      editTask(taskrow._id);
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-primary m-2"
+                    onClick={() => {
+                      deleteTask(taskrow._id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </Fragment>
   );
 };
