@@ -1,9 +1,12 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
-const HomePage = (props) => {
-    return <div>
-        Home
+const HomePage = () => {
+  return (
+    <div>
+      Welcome to HomePage
     </div>
-}
+  );
+};
 
 export default HomePage;
