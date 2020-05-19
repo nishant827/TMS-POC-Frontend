@@ -14,7 +14,7 @@ function UserList(props) {
   const [data, setData] = useState([]);
   const [modal, setModal] = useState(false);
   const [delmodal, setDelModal] = useState(false);
-  const [message,setMessage]=useState(false);
+  const [message,setMessage]=useState(0);
   const [loading, setLoading] = useState(false);
   const [user, setuser] = useState({
     firstName: '', lastName: '', email: '', password: '', age: '', countryCode: '', mobileNo: "",
@@ -53,10 +53,10 @@ function UserList(props) {
     setData(result.data.data);
   };
   const searchData = async (searchVal) => {
-    console.log("searchVal", searchVal);
+    console.log("searchValSatish###############", searchVal);
     setLoading(true);
     axios
-      .get(`http://localhost:3030/api/user/search?searchedText=${searchVal}`, { headers: { "Authorization": `${token}` } })
+      .get(`http://localhost:3030/api/user/search?searchedText=${searchVal}&limit=5&offset=1`, { headers: { "Authorization": `${token}` } })
       .then(res => {
         setData(res.data.data);
         setLoading(false);
@@ -101,9 +101,13 @@ function UserList(props) {
           firstName: '', lastName: '', email: '', password: '', age: '', countryCode: '', mobileNo: "",
           Gender: "", role: ""
         })
+        setDelModal(true);
+        setMessage(1);
         GetData();
         // props.history.push('/userlist')
 
+      }).catch((err)=>{
+        setMessage(0);
       });
 
   };
@@ -123,7 +127,7 @@ function UserList(props) {
       axios.delete('http://localhost:3030/api/user/remove/' + id, { headers: { "Authorization": `${token}` } })
         .then((result) => {
           setDelModal(true);
-          setMessage(true);
+          setMessage(2);
           GetData()
           deltoggle();
         
@@ -131,6 +135,7 @@ function UserList(props) {
         // props.history.push('/userlist');
 
       }).catch((err)=>{
+        setMessage(0);
         setDelModal(false)
       });
 
@@ -158,9 +163,16 @@ function UserList(props) {
       return "Technician"
     }
   }
+  let displayMessage;
+  if(message===1){
+    displayMessage="user added successfully";
+  } else if (message===2){
+    displayMessage="user deleted successfully";
+  } else {
+    displayMessage="somethig went wrong";
 
-
-
+  }
+ console.log("message@@@@@@@@@@@@@@@@@@@@@@",message)
   return (
 
     <div className="animated fadeIn">
@@ -312,7 +324,7 @@ function UserList(props) {
       <Modal isOpen={delmodal} toggle={deltoggle}>
         <ModalHeader toggle={deltoggle}></ModalHeader>
         <ModalBody>
-          {message?"User deleted successfully":"Something went wrong"}
+          {displayMessage}
         </ModalBody>
         <ModalFooter>
         <Button color="secondary" onClick={redirect}>Close</Button>
