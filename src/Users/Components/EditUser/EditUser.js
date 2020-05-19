@@ -6,6 +6,7 @@ import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputG
 
 
 
+
 function Edituser(props) {  
   const userData = useSelector((state) => state.loggedUser);
  
@@ -23,6 +24,10 @@ function Edituser(props) {
         const redirect=()=> props.history.push('/userlist') ;
         
         // const token=localStorage.getItem('token');
+        const CancelFun=()=>{
+          props.history.push('/userlist');
+          return;
+        }
         
         // const [modal, setModal] = useState(false);
         useEffect(() => {  
@@ -184,7 +189,7 @@ function Edituser(props) {
 
                             <Col xs="12" sm="6">  
 
-                              <Button className="btn btn-info mb-1" block ><span>Cancel</span></Button>  
+                              <Button className="btn btn-info mb-1" onClick={CancelFun} block ><span>Cancel</span></Button>  
 
                             </Col>  
 
