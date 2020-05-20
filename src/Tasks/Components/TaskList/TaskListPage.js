@@ -45,8 +45,8 @@ const TaskListPage = (props) => {
     console.log("editTaks is calling",id);
     console.log("props",props);
     props.history.push({  
-      pathname: '/updatetask/' + id  
-
+      pathname: '/updatetask/' + id,  
+      taskId:id
     });  
   };  
 

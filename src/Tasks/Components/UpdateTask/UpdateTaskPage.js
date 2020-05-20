@@ -27,7 +27,7 @@ const UpdateTaskPage = (props) => {
   });
   
     // const Url = "http://localhost:3030/api/task/" + props.match.params.id;
-    const url='http://localhost:3030/api/task/list';
+    const url='http://localhost:3030/api/task/'+ props.match.params.id;
     // const token=localStorage.getItem('token');
      const user = useSelector((state) => state.loggedUser);
     const token =  user.user.token;
@@ -43,7 +43,8 @@ const UpdateTaskPage = (props) => {
       const getTaskData = async () => {  
         const apiResult = await axios(url,{ headers: {"Authorization" : `${token}`} }); 
         console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$",apiResult);
-        setFormData(apiResult.data.data[0]);  
+        console.log("iiiiiiiiiiiiiiiiiiiii", apiResult.data);
+        setFormData(apiResult.data.data);  
       };  
       getTaskData();
      },[]);
