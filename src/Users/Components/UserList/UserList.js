@@ -43,9 +43,14 @@ function UserList(props) {
     })
   };
   const roles = [
-    { value: 'SuperAdmin', label: 'SuperAdmin' },
-    { value: 'ZonalHead', label: 'ZonalHead' },
-    { value: 'Technision', label: 'Technision' }];
+    { value: 'SA', label: 'SuperAdmin' },
+    { value: 'ZH', label: 'ZonalHead' },
+    { value: 'TECH', label: 'Technician' }];
+  const genders=[
+    {value:"M",label:"Male"},
+    {value:"F",label:"Female"},
+    {value:"O",label:"Others"}
+  ]
   const [showLoading, setShowLoading] = useState(false);
   const GetData = async () => {
     const result = await axios('http://localhost:3030/api/user/list', { headers: { "Authorization": `${token}` } });
@@ -56,7 +61,7 @@ function UserList(props) {
     console.log("searchValSatish###############", searchVal);
     setLoading(true);
     axios
-      .get(`http://localhost:3030/api/user/search?searchedText=${searchVal}&limit=5&offset=1`, { headers: { "Authorization": `${token}` } })
+      .get(`http://localhost:3030/api/user/search?searchedText=${searchVal}&limit=5&offset=0`, { headers: { "Authorization": `${token}` } })
       .then(res => {
         setData(res.data.data);
         setLoading(false);
@@ -71,7 +76,9 @@ function UserList(props) {
     console.log("e[0].value", e);
     setuser({ ...user, role: e.value });
   };
-
+const handleUserGender=e=>{
+  setuser({...user,Gender:e.value});
+}
   const Insertuser = (e) => {
     console.log("Insertuser", user);
     e.preventDefault();
@@ -84,7 +91,7 @@ function UserList(props) {
       contactDetails: {
         countryCode: user.countryCode,
         mobileNo: user.mobileNo
-      }, Gender: user.Gender, role: user.role
+      }, gender: user.Gender, role: user.role
     };
     console.log("apiUrl", apiUrl, "data", data);
 
@@ -162,6 +169,15 @@ function UserList(props) {
     else{
       return "Technician"
     }
+  }
+  const checkGender=(gender)=>{
+     if(gender==="F"){
+         return "Female"
+     } else if(gender==="M"){
+       return "Male";
+     } else {
+        return "Others"
+     }
   }
   let displayMessage;
   if(message===1){
@@ -246,7 +262,7 @@ function UserList(props) {
 
                         <td>
 
-                          {item.Gender}
+                          {checkGender(item.gender)}
 
                         </td>
                         <td>{checkRole(item.role)}</td>
@@ -287,7 +303,7 @@ function UserList(props) {
                 <div className="col-md-6">
                   <Input type="text" name="firstName" id="firstName" placeholder="firstName" value={user.firstName} onChange={onChange} />
                   <Input type="text" placeholder="Lastname" name="lastName" id="lastName" value={user.lastName} onChange={onChange} />
-                  <Input type="number" placeholder="Age" name="age" id="age" value={user.age} onChange={onChange} />
+                  <Input type="text" placeholder="Age" name="age" id="age" value={user.age} onChange={onChange} />
                   <Input type="text" placeholder="Email" name="email" id="email" value={user.email} onChange={onChange} />
                   <Select
                     name="role"
@@ -299,9 +315,16 @@ function UserList(props) {
                 </div>
                 <div className="col-md-6">
                   <Input type="password" placeholder="Password" name="password" id="password" value={user.password} onChange={onChange} />
-                  <Input type="number" placeholder="countryCode" name="countryCode" id="countryCode" value={user.countryCode} onChange={onChange} />
-                  <Input type="number" placeholder="mobileNo" name="mobileNo" id="mobileNo" value={user.mobileNo} onChange={onChange} />
-                  <Input type="text" placeholder="Gender" name="Gender" id="Gender" value={user.Gender} onChange={onChange} />
+                  <Input type="text" placeholder="countryCode" name="countryCode" id="countryCode" value={user.countryCode} onChange={onChange} />
+                  <Input type="text" placeholder="mobileNo" name="mobileNo" id="mobileNo" value={user.mobileNo} onChange={onChange} />
+                  {/* <Input type="text" placeholder="Gender" name="Gender" id="Gender" value={user.Gender} onChange={onChange} /> */}
+                  <Select
+                    name="gender"
+                    placeholder="select gender"
+                    onChange={(e) => handleUserGender(e)}
+                    options={genders}
+
+                  />
                 </div>
               </div>
               <div className="modal-body row">

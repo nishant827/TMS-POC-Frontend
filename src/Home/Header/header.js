@@ -95,8 +95,8 @@ function Header() {
           </Link>
         </li> */}
         <li className="nav-item">
-          <Link className="nav-link" onClick={SignOut} to="/login">
-            SignOut
+          <Link className="nav-link" onClick={submit} >
+          SignOut
           </Link>
         </li>
       </Fragment>
@@ -110,7 +110,7 @@ function Header() {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" onClick={SignOut} to="/login">
+          <Link className="nav-link" onClick={submit}>
             SignOut
           </Link>
         </li>
