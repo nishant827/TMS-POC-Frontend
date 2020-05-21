@@ -21,7 +21,8 @@ const CreateTaskPage = (props) => {
     technicians: [
       { id: 1, value: 'sam',  label: 'Sam'},
       { id:2,value: 'Smith', label: 'Smith'},
-      {id:3,value: 'Karen', label: 'Karen'}],
+      {id:3,value: 'Karen', label: 'Karen'}
+    ],
     startDate: "",
     estimatedEndDate: "",
     status: "",
@@ -101,7 +102,7 @@ const CreateTaskPage = (props) => {
                 <input
                   type="text"
                   className= "form-control"
-                  placeholder="Site address"
+                  placeholder="Site Address"
                   name="address"
                   value={address}
                   onChange={(e) => onChange(e)}
@@ -116,7 +117,7 @@ const CreateTaskPage = (props) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="task type"
+                  placeholder="Task Type"
                   name="taskType"
                   value={taskType}
                   onChange={(e) => onChange(e)}
@@ -128,7 +129,7 @@ const CreateTaskPage = (props) => {
               <input
                 type="text"
                 className= "form-control input-lg"
-                placeholder="task title"
+                placeholder="Task Title"
                 name="taskTitle"
                 value={taskTitle}
                 onChange={(e) => onChange(e)}
@@ -142,7 +143,7 @@ const CreateTaskPage = (props) => {
                 <input
                   type="text"
                   className= "form-control input-lg"
-                  placeholder="task description"
+                  placeholder="Task Description"
                   name="taskDescription"
                   value={taskDescription}
                   onChange={(e) => onChange(e)}
@@ -153,7 +154,7 @@ const CreateTaskPage = (props) => {
               <div className="form-group">
                 <Select
                   name="technicians"
-                  placeholder="select Technician"
+                  placeholder="Select Technician"
                   onChange={handleTechnicianSelectChange}
                   options={technicians}
                   isMulti= {true}
@@ -166,9 +167,9 @@ const CreateTaskPage = (props) => {
             <div className="col-sm-6">
               <div className="form-group">
                 <input
-                  type="text"
+                  type="date"
                   className= "form-control input-lg"
-                  placeholder="start date"
+                  placeholder="Start Date"
                   name="startDate"
                   value={startDate}
                   onChange={(e) => onChange(e)}
@@ -178,9 +179,9 @@ const CreateTaskPage = (props) => {
             <div className="col-sm-6">
               <div className="form-group">
                 <input
-                  type="text"
+                  type="date"
                   className= "form-control input-lg"
-                  placeholder="estimated End Date"
+                  placeholder="Estimated End Date"
                   name="estimatedEndDate"
                   value={estimatedEndDate}
                   onChange={(e) => onChange(e)}
@@ -194,7 +195,7 @@ const CreateTaskPage = (props) => {
                 <input
                   type="text"
                   className= "form-control input-lg"
-                  placeholder="status"
+                  placeholder="Status"
                   name="status"
                   value={status}
                   onChange={(e) => onChange(e)}

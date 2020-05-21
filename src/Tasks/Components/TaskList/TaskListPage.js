@@ -12,7 +12,7 @@ import { Modal, Button}  from "react-bootstrap";
 const TaskListPage = (props) => {
   const userData = useSelector((state) => state.loggedUser);
   const token = userData.user.token;
-
+  console.log("TaskListPage:-userData",userData.user.role);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -53,9 +53,9 @@ const TaskListPage = (props) => {
   return (
     <Fragment>
       <h1 className="large text-primary">Task List</h1>
-      <button className="btn btn-primary" onClick={handleShow}>
+     {userData.user && userData.user.role!=="TECH"? <button className="btn btn-primary" onClick={handleShow}>
         Add Task
-      </button>
+      </button>:""}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create Task</Modal.Title>

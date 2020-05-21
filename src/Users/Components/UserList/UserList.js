@@ -102,8 +102,9 @@ const handleUserGender=e=>{
     axios.post(apiUrl, data, { headers: { "Authorization": `${token}` } })
 
       .then((result) => {
-        NotificationManager.success('Success message', 'User added successfully');
+        // NotificationManager.success('Success message', 'User added successfully');
         // console.log(NotificationManager);
+       
         setuser({
           firstName: '', lastName: '', email: '', password: '', age: '', countryCode: '', mobileNo: "",
           Gender: "", role: ""
