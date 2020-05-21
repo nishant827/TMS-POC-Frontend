@@ -12,6 +12,7 @@ import { Modal, Button}  from "react-bootstrap";
 const TaskListPage = (props) => {
   const userData = useSelector((state) => state.loggedUser);
   const token = userData.user.token;
+  
 
   const [show, setShow] = useState(false);
 
@@ -52,7 +53,7 @@ const TaskListPage = (props) => {
 
   return (
     <Fragment>
-      <h1 className="large text-primary">Task List</h1>
+      <br/>
       <button className="btn btn-primary" onClick={handleShow}>
         Add Task
       </button>
@@ -64,16 +65,16 @@ const TaskListPage = (props) => {
           <CreateTaskPage handleClose={(e) => handleClose()} />
         </Modal.Body>
       </Modal>
-      <table className="table" style={{marginTop:'40px'}}>
+      <table className="table table-striped  table-bordered" style={{marginTop:'40px'}}>
         <thead>
           <tr>
-            <th scope="col">Site Id</th>
+            <th scope="col">Site Name</th>
             <th scope="col">Site Address</th>
             <th scope="col">Task Title</th>
             <th scope="col">Technicians</th>
             <th scope="col">start Date</th>
             <th scope="col">End Date</th>
-            <th scope="col"> </th>
+            <th scope="col">Action </th>
           </tr>
         </thead>
         <tbody>

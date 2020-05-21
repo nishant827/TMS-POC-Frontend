@@ -31,22 +31,29 @@ const UpdateTaskPage = (props) => {
     // const token=localStorage.getItem('token');
      const user = useSelector((state) => state.loggedUser);
     const token =  user.user.token;
-    const technicians1=[
+    const technicians1= formData.technicians;
+    /* [
       { id: 1, value: 'sam',  label: 'Sam'},
       { id:2,value: 'Smith', label: 'Smith'},
-      {id:3,value: 'Karen', label: 'Karen'}];
-   console.log("formData",formData);
+      {id:3,value: 'Karen', label: 'Karen'}];*/
+   console.log("formData====>",formData);
   const { towerId, address, taskType, taskTitle, taskDescription, technicianName,technicians,
      startDate, estimatedEndDate, status,item,items } = formData;
-    //get data from API 
+    //get data from API
+    //get technicians data from API 
+    const GetTechnicianData = async () => {  
+      const result = await axios('http://localhost:3030/api/user/userType/list?userType=TECH&limit=10&offset=0',{ headers: {"Authorization" : `${token}`} }); 
+      const mappedData = result.data.data.map(element => ({ value: element.firstName, label: element.firstName, ...element }));
+      setFormData({ ...formData, technicians: mappedData });
+      
+    }; 
     useEffect(() =>{
       const getTaskData = async () => {  
         const apiResult = await axios(url,{ headers: {"Authorization" : `${token}`} }); 
-        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$",apiResult);
-        console.log("iiiiiiiiiiiiiiiiiiiii", apiResult.data);
         setFormData(apiResult.data.data);  
       };  
       getTaskData();
+      //GetTechnicianData();
      },[]);
  
   const onChange = (e) => {
@@ -68,7 +75,7 @@ const UpdateTaskPage = (props) => {
     }; 
     axios.put(`http://localhost:3030/api/task/update/${props.match.params.id}`, apiInputData,{ headers: {"Authorization" : `${token}`} })
      .then((result) => {
-        props.history.push('/dashboard')  
+        props.history.push('/tasklist')  
      });  
       alert("Task Updated successfully!!");
   };
@@ -79,10 +86,9 @@ const UpdateTaskPage = (props) => {
   const handleItemSelectChange = e => {
     setFormData({ ...formData, ['item']: e });
   };
-  
   return (
     <Fragment>
-      <h1 className="large text-primary">Update Task</h1>
+    <h1 className="large text-primary">Update Task</h1>
       <form className="form" onSubmit={(e) => onSubmit(e)}>
         <div className= "row">
         <div className="col-sm-2"></div>
@@ -157,9 +163,9 @@ const UpdateTaskPage = (props) => {
               <div className="form-group">
               <Select
                 name="technicians"
-                placeholder="select Technician"
+                placeholder="Select Technician"
                 onChange={(e)=>handleTechnicianSelectChange(e)}
-                options={technicians1}
+                options={formData.technicians}
                 isMulti={true}
               />
               </div>

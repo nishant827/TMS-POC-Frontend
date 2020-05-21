@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
@@ -18,17 +18,30 @@ const CreateTaskPage = (props) => {
     taskTitle: "",
     taskDescription: "",
     technicianName: null,
-    technicians: [
+    //technicians: null,
+    /*[
       { id: 1, value: 'sam',  label: 'Sam'},
       { id:2,value: 'Smith', label: 'Smith'},
-      {id:3,value: 'Karen', label: 'Karen'}],
+      {id:3,value: 'Karen', label: 'Karen'}],*/
     startDate: "",
     estimatedEndDate: "",
     status: "",
   });
   // const token=localStorage.getItem('token');
   const { towerId, address, taskType, taskTitle, taskDescription, technicianName, technicians,startDate, estimatedEndDate, status } = formData;
+  //const [technicianList, setTechnicianList]= useState();
+  const [selectTech,setTech]=useState({id:"",value:"",label:""});
 
+ //api and assign to state
+  const GetData = async () => {  
+    const result = await axios('http://localhost:3030/api/user/userType/list?userType=TECH&limit=10&offset=0',{ headers: {"Authorization" : `${token}`} }); 
+    console.log("technicians",JSON.stringify(result.data.data));
+    const mappedData = result.data.data.map(element => ({ value: element.firstName, label: element.firstName, ...element }))
+    setFormData({ ...formData, technicians: mappedData });
+  };  
+  useEffect(() => { 
+    GetData();  
+  }, []); 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -63,12 +76,12 @@ const CreateTaskPage = (props) => {
           props.handleClose();
         } else {
           alert("Task not Created");
-          props.history.push("/dashboard");
+          props.history.push("/tasklist");
         }
       } catch (e) {
         console.log("what is the error",e);
         alert("Error while creating task");
-        props.history.push("/dashboard");
+        props.history.push("/tasklist");
       }
       
       alert("Task created successfully!!");
