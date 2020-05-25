@@ -5,12 +5,14 @@ const UpdateUser=React.lazy(()=>import('./views/Users/Components/EditUser/EditUs
 const CreateTaskPage=React.lazy(()=>import('./views/Tasks/Components/CreateTask/CreateTaskPage'));
 const UpdateTaskPage=React.lazy(()=>import('./views/Tasks/Components/UpdateTask/UpdateTaskPage'));
 const TaskListPage=React.lazy(()=>import('./views/Tasks/Components/TaskList/TaskListPage'));
+const ProfilePage=React.lazy(()=>import('./views/Profile/UserProfile/UserProfile'))
 
 // import UpdateUser from './Users/Components/EditUser/EditUser';
 
 
 const routes = [
   { path: '/', exact: true, name: 'Home',component: UserList  },
+  {path:'/profile',exact:true,name:"Profile",component:ProfilePage},
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/userList', name: 'Users', component: UserList },
   { path: '/editUser/:id', name: 'UpdateUser', component: UpdateUser },

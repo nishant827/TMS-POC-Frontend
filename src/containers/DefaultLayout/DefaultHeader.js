@@ -15,6 +15,7 @@ const propTypes = {
   children: PropTypes.node,
 };
 
+
 const defaultProps = {};
 const DefaultHeader=(props)=>{
   const user = useSelector((state) => state.loggedUser);
@@ -24,6 +25,7 @@ const DefaultHeader=(props)=>{
   let role = user.user ? user.user.role : null;
   const { children, ...attributes } = props;
   console.log("what is the props coming here",props);
+ 
   return (
     <React.Fragment>
       <AppSidebarToggler className="d-lg-none" display="md" mobile />
@@ -62,11 +64,11 @@ const DefaultHeader=(props)=>{
           <DropdownMenu right>
             <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
             {/* <DropdownItem><i className="fa fa-bell-o"></i> Updates<Badge color="info">42</Badge></DropdownItem> */}
-            <DropdownItem><i className="fa fa-envelope-o"></i> Messages<Badge color="success">42</Badge></DropdownItem>
+            <DropdownItem><i className="fa fa-user"></i>{user.user.firstName}&nbsp;{user.user.lastName}</DropdownItem>
             {/* <DropdownItem><i className="fa fa-tasks"></i> Tasks<Badge color="danger">42</Badge></DropdownItem> */}
             {/* <DropdownItem><i className="fa fa-comments"></i> Comments<Badge color="warning">42</Badge></DropdownItem> */}
             {/* <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem> */}
-            <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
+            <DropdownItem onClick={e=>props.ReditectToProfile(e)}><i className="fa fa-user"></i> Profile</DropdownItem>
             <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
             {/* <DropdownItem><i className="fa fa-usd"></i> Payments<Badge color="secondary">42</Badge></DropdownItem> */}
             {/* <DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem> */}

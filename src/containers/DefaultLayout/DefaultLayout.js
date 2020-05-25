@@ -45,12 +45,17 @@ const DefaultLayout=(props)=>{
    console.log("logout is calling")
    props.history.push('/login')
  };
+ const profileLink=(e)=>{
+  console.log("calling profile link",props);
+  props.history.push('/profile');
+  // return <Redirect to='/profile' />
 
+}
  return (
     <div className="app">
       <AppHeader fixed style={{backgroundColor:"#20a8d8"}}>
         <Suspense  fallback={loading()}>
-          <DefaultHeader onLogout={e=>logOut(e)}/>
+          <DefaultHeader onLogout={e=>logOut(e)} ReditectToProfile={e=>profileLink(e)}/>
         </Suspense>
       </AppHeader>
       <div className="app-body">

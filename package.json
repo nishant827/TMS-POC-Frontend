@@ -35,21 +35,19 @@
     "reactstrap": "^8.4.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "shards-react": "^1.0.3",
     "simple-line-icons": "^2.4.1"
   },
   "devDependencies": {
     "react-scripts": "^3.4.1"
   },
   "scripts": {
-    "start": "set PORT=8000 &&  react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand",
     "eject": "react-scripts eject"
-  },
-  "bugs": {
-    "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
   },
   "eslintConfig": {
     "extends": "react-app"

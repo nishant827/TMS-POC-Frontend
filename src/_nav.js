@@ -232,8 +232,7 @@ export default {
       url: '/pages',
       icon: 'icon-star',
       children: [
-     
-        {
+         {
           name: 'Users',
           url: '/userList',
           icon: 'icon-user',
@@ -241,6 +240,11 @@ export default {
         {
           name:"Tasks",
           url:"/tasklist",
+          icon:"icon-star"
+        },
+        {
+          name:"Profile",
+          url:"/profile",
           icon:"icon-star"
         }
       ],

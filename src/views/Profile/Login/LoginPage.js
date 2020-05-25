@@ -67,7 +67,7 @@ const LoginPage = (props) => {
     </div>
     {/* Login Form */}
     <form onSubmit={(e) => onSubmit(e)}>
-          <input
+          <input 
             type="email"
             placeholder="Email Address"
             className="fadeIn second"
