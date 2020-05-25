@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { ProfileReducer } from "./Profile/ProfileReducer";
-import { loggedUser } from "./Profile/reducers/IsLogin";
+import { ProfileReducer } from "./views/Profile/ProfileReducer";
+import { loggedUser } from "./views/Profile/reducers/IsLogin";
 
 export const rootReducer = combineReducers({
   ProfileReducer,
