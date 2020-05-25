@@ -18,7 +18,8 @@ function UserList(props) {
   const userData = useSelector((state) => state.loggedUser);
   console.log("userData",userData);
   let token;
-  token = userData.user.token;
+  // token = userData.user.token;
+  token = localStorage.getItem('token');
 
   const [data, setData] = useState([]);
   const [modal, setModal] = useState(false);
@@ -248,7 +249,7 @@ function UserList(props) {
 
             <CardBody>
 
-              <Button style={{ "background": "#0366ee", "marginBottom": "9px", width: "43px", padding: "8px" }} data-toggle="tooltip" data-placement="top" title="Add user" onClick={toggle}>Add</Button>
+              <Button style={{ "background": "#0366ee", "marginBottom": "9px", width: "50px", padding: "8px" }} data-toggle="tooltip" data-placement="top" title="Add user" className='m-2' onClick={toggle}>Add</Button>
               {/* <Button onClick={submit}>Confirm dialog</Button> */}
               <input
                 type="text"

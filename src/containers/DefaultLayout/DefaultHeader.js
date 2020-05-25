@@ -22,7 +22,8 @@ const DefaultHeader=(props)=>{
 
    console.log("@@@@@@@@user@@@@@@@@@",user);
  
-  let role = user.user ? user.user.role : null;
+  // let role = user.user ? user.user.role : null;
+  let role = localStorage.getItem("role");
   const { children, ...attributes } = props;
   console.log("what is the props coming here",props);
  
