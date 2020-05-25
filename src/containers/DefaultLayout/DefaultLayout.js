@@ -30,9 +30,10 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 const DefaultLayout=(props)=>{
   const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
   const userData = useSelector((state) => state.loggedUser);
+  const token = localStorage.getItem('token')
 
-  if(userData.user===null){
-    props.history.push('/login');
+  if (token === null) {
+    props.history.push("/login");
   }
   // const token = userData.user.token;
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ const DefaultLayout=(props)=>{
    console.log("calling signout function");
    dispatch(signOut());
    localStorage.removeItem("token");
+   localStorage.removeItem("role");
    console.log("logout is calling")
    props.history.push('/login')
  };

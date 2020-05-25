@@ -30,7 +30,8 @@ const UpdateTaskPage = (props) => {
     const url='http://localhost:3030/api/task/'+ props.match.params.id;
     // const token=localStorage.getItem('token');
      const user = useSelector((state) => state.loggedUser);
-    const token =  user.user.token;
+    // const token =  user.user.token;
+    const token = localStorage.getItem('token');
     const technicians1= formData.technicians;
     /* [
       { id: 1, value: 'sam',  label: 'Sam'},

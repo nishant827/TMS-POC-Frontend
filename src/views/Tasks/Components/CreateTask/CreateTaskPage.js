@@ -10,7 +10,9 @@ import { CreateTask } from "../../TaskActions";
 const CreateTaskPage = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.loggedUser);
-  const token =  user.user.token;
+
+  // const token =  user.user.token;
+  const token = localStorage.getItem('token');
   const [formData, setFormData] = useState({
     towerId: "",
     address: "",
