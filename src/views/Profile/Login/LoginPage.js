@@ -97,7 +97,7 @@ const LoginPage = (props) => {
   </div>
 
   <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Login Failed</ModalHeader>
+        <ModalHeader toggle={toggle} style={{backgroundColor:"red"}}>Login Failed</ModalHeader>
         <ModalBody>
           Invalid username or password
         </ModalBody>
