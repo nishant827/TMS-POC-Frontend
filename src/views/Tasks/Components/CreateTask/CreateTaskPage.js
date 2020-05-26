@@ -45,7 +45,15 @@ const CreateTaskPage = (props) => {
     GetData();  
   }, []); 
   const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if(e.target.name="startDate") {
+      let formattedDate= e.target.value.toString().split("-").reverse().join("-");
+      setFormData({ ...formData, [e.target.name]: formattedDate });
+    } else if(e.target.name="estimatedEndDate") {
+      let formattedDate= e.target.value.toString().split("-").reverse().join("-");
+      setFormData({ ...formData, [e.target.name]: formattedDate });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
   const onSubmit = async (e) => {
