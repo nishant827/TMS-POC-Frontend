@@ -72,7 +72,7 @@ const DefaultHeader=(props)=>{
             {/* <DropdownItem><i className="fa fa-comments"></i> Comments<Badge color="warning">42</Badge></DropdownItem> */}
             {/* <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem> */}
             <DropdownItem onClick={e=>props.ReditectToProfile(e)}><i className="fa fa-user"></i> Profile</DropdownItem>
-            <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
+            <DropdownItem onClick={e=>props.settings(e)}><i className="fa fa-wrench"></i> Settings</DropdownItem>
             {/* <DropdownItem><i className="fa fa-usd"></i> Payments<Badge color="secondary">42</Badge></DropdownItem> */}
             {/* <DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem> */}
             <DropdownItem divider />
