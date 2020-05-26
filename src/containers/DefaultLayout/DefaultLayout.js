@@ -44,6 +44,8 @@ const DefaultLayout=(props)=>{
    dispatch(signOut());
    localStorage.removeItem("token");
    localStorage.removeItem("role");
+   localStorage.removeItem("firstName");
+   localStorage.removeItem("lastName");
    console.log("logout is calling")
    props.history.push('/login')
  };

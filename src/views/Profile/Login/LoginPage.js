@@ -36,6 +36,9 @@ const LoginPage = (props) => {
         dispatch(signIn(data.result.data.user));
         localStorage.setItem("token", data.result.data.token);
         localStorage.setItem("role", data.result.data.user.role);
+        localStorage.setItem("firstName", data.result.data.user.firstName);
+        localStorage.setItem("lastName", data.result.data.user.lastName);
+        localStorage.setItem("email", data.result.data.user.email);
         if (data.result.data.user.role === "TECH") {
           props.history.push("/tasklist");
         } else {

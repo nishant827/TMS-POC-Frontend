@@ -19,6 +19,8 @@ const propTypes = {
 const defaultProps = {};
 const DefaultHeader=(props)=>{
   const user = useSelector((state) => state.loggedUser);
+  const firstName = localStorage.getItem("firstName");
+  const lastName = localStorage.getItem("lastName");
 
    console.log("@@@@@@@@user@@@@@@@@@",user);
  
@@ -49,7 +51,7 @@ const DefaultHeader=(props)=>{
         </NavItem>
       </Nav>
       <Nav className="ml-auto" navbar>
-        <NavItem className="d-md-down-none">
+        {/* <NavItem className="d-md-down-none">
           <NavLink to="#" className="nav-link"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>
         </NavItem>
         <NavItem className="d-md-down-none">
@@ -57,7 +59,7 @@ const DefaultHeader=(props)=>{
         </NavItem>
         <NavItem className="d-md-down-none">
           <NavLink to="#" className="nav-link"><i className="icon-location-pin"></i></NavLink>
-        </NavItem>
+        </NavItem> */}
         <UncontrolledDropdown nav direction="down">
           <DropdownToggle nav>
             <img src={'../../assets/img/avatars/user.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
@@ -65,7 +67,7 @@ const DefaultHeader=(props)=>{
           <DropdownMenu right>
             <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
             {/* <DropdownItem><i className="fa fa-bell-o"></i> Updates<Badge color="info">42</Badge></DropdownItem> */}
-            <DropdownItem><i className="fa fa-user"></i>{user.user.firstName}&nbsp;{user.user.lastName}</DropdownItem>
+            <DropdownItem><i className="fa fa-user"></i>{firstName}&nbsp;{lastName}</DropdownItem>
             {/* <DropdownItem><i className="fa fa-tasks"></i> Tasks<Badge color="danger">42</Badge></DropdownItem> */}
             {/* <DropdownItem><i className="fa fa-comments"></i> Comments<Badge color="warning">42</Badge></DropdownItem> */}
             {/* <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem> */}

@@ -3,6 +3,8 @@ import React, { Fragment, useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'
 import axios from "axios";
 import CreateTaskPage from "../CreateTask/CreateTaskPage";
 import { useSelector } from "react-redux";
@@ -12,12 +14,35 @@ import { Modal, Button}  from "react-bootstrap";
 const TaskListPage = (props) => {
   const userData = useSelector((state) => state.loggedUser);
   const token = localStorage.getItem('token');
+  const role = localStorage.getItem('role');
   // const token = userData.user.token;
 
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+
+  const Nobtn = () => {
+
+  }
+  const submit = (data) => {
+    confirmAlert({
+      title: 'Confirm to Delete',
+      message: `Are you sure want to delete ${data.firstName}`,
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => deleteTask(data._id)
+        },
+        {
+          label: 'No',
+          onClick: () => Nobtn()
+        }
+      ]
+
+    })
+  };
 
   //Intialize state
   const [formData, setFormData] = useState([]);
@@ -53,7 +78,7 @@ const TaskListPage = (props) => {
 
   return (
     <Fragment>
-     {userData.user && userData.user.role!=="TECH"? <button className="btn btn-primary" onClick={handleShow}>
+     {role && role!=="TECH"? <button className="btn btn-primary" onClick={handleShow}>
         Add Task
       </button>:""}
       <Modal show={show} onHide={handleClose}>
@@ -115,9 +140,11 @@ const TaskListPage = (props) => {
                   </button>
                   <button
                     className="btn btn-primary m-2"
-                    onClick={() => {
-                      deleteTask(taskrow._id);
-                    }}
+
+                    onClick={() => { submit(taskrow) }}
+                    // onClick={() => {
+                    //   deleteTask(taskrow._id);
+                    // }}
                   >
                     Delete
                   </button>

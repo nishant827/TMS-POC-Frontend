@@ -228,7 +228,7 @@ export default {
     //   name: 'Extras',
     // },
     {
-      name: 'Pages',
+      name: 'Actions',
       url: '/pages',
       icon: 'icon-star',
       children: [

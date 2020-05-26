@@ -62,12 +62,15 @@ const CreateTaskPage = (props) => {
         startDate,
         estimatedEndDate
       };
-      console.log('=============>',JSON.stringify(apiInputData));
+      // console.log('=============>',JSON.stringify(apiInputData));
       try {
+        let technicianIds = technicianName.map((techie) => {
+          return techie._id;
+        });
         let { status, data } = await axios.post(
           "http://localhost:3030/api/task/new",
           {
-            towerId, address, taskType, taskTitle, taskDescription, technicians,technicianName, startDate, estimatedEndDate
+            towerId, address, taskType, taskTitle, taskDescription, "technicians": technicianIds, startDate, estimatedEndDate
           },
           { headers: {"Authorization" : `${token}`} }
         );

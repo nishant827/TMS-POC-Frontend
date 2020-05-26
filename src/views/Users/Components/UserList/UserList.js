@@ -262,7 +262,7 @@ function UserList(props) {
 
                   <tr>
 
-                    <th >Firstname  <span onClick={e => AscSorting(e, "firstName")} className="glyphicon glyphicon-triangle-bottom"></span>hi<span onClick={e => DscSorting(e, "firstName")} className="glyphicon glyphicon-triangle-top"></span> </th>
+                    <th >Firstname  <span onClick={e => AscSorting(e, "firstName")} className="glyphicon glyphicon-triangle-bottom"></span><span onClick={e => DscSorting(e, "firstName")} className="glyphicon glyphicon-triangle-top"></span> </th>
 
                     <th>Lastname <span onClick={e => AscSorting(e, "lastName")} className="glyphicon glyphicon-triangle-bottom"></span><span onClick={e => DscSorting(e, "lirstName")} className="glyphicon glyphicon-triangle-top"></span> </th>
 
