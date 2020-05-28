@@ -18,8 +18,8 @@ function UserList(props) {
   const userData = useSelector((state) => state.loggedUser);
   console.log("userData",userData);
   let token;
-  // token = userData.user.token;
-  token = localStorage.getItem('token');
+  token = userData.user.token;
+  // token = localStorage.getItem('token');
 
   const [data, setData] = useState([]);
   const [modal, setModal] = useState(false);

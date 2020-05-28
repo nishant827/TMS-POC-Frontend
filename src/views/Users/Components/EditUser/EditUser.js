@@ -11,8 +11,8 @@ function Edituser(props) {
 
   const [modal, setModal] = useState(false);
   const [message, setMessage] = useState(false)
-  // const token = userData.user.token;
-  const token = localStorage.getItem('token');
+  const token = userData.user.token;
+  // const token = localStorage.getItem('token');
 
   console.log()
   const [user, setuser] = useState({

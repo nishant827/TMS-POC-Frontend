@@ -19,13 +19,14 @@ const propTypes = {
 const defaultProps = {};
 const DefaultHeader=(props)=>{
   const user = useSelector((state) => state.loggedUser);
-  const firstName = localStorage.getItem("firstName");
-  const lastName = localStorage.getItem("lastName");
-
+  // const firstName = localStorage.getItem("firstName");
+  // const lastName = localStorage.getItem("lastName");
+  const firstName = user.user ? user.user.firstName : null;
+  const lastName = user.user ? user.user.lastName : null;
    console.log("@@@@@@@@user@@@@@@@@@",user);
  
-  // let role = user.user ? user.user.role : null;
-  let role = localStorage.getItem("role");
+  let role = user.user ? user.user.role : null;
+  // let role = localStorage.getItem("role");
   const { children, ...attributes } = props;
   console.log("what is the props coming here",props);
  

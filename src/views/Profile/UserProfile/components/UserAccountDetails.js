@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Card,
@@ -12,16 +12,64 @@ import {
   FormInput,
   FormSelect,
   FormTextarea,
-  Button
+  Button,
 } from "shards-react";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { profileData } from "../../actions/index";
 
-const UserAccountDetails = ({ userDetails }) => {
+const UserAccountDetails = ({ userDetails, props }) => {
+  const user = useSelector((state) => state.loggedUser);
+  const dispatch = useDispatch();
 
-  const handleUpdate = ()=> {
-    console.log('aaaaa')
-  }
+  const [firstName, setFirstName] = useState(userDetails.firstName);
+  const [lastName, setLastName] = useState(userDetails.lastName);
+  const [phone, setPhone] = useState(userDetails.phone);
+  const [countryCode, setCountryCode] = useState(userDetails.code);
+  // const token = localStorage.getItem("token");
+  // const id = localStorage.getItem("id");
+  const token = user.user.token;
+  const id = user.user._id;
+  useEffect(() => {
+    console.log(user, "user");
+  }, [user]);
+  const handleUpdate = async () => {
+    try {
+      let { data } = await axios.put(
+        `http://localhost:3030/api/user/update/${id}`,
+        {
+          firstName,
+          lastName,
+          contactDetails: {
+            countryCode: countryCode,
+            mobileNo: phone,
+          },
+        },
+        { headers: { Authorization: `${token}` } }
+      );
+      if (data.status === 200) {
+        alert(data.message);
+        dispatch(
+          profileData({
+            firstName,
+            lastName,
+            contactDetails: {
+              countryCode: countryCode,
+              mobileNo: phone,
+            },
+          })
+        );
+        props.history.push("/profile");
+      } else {
+        alert(data.message);
+        props.history.push("/profile");
+      }
+    } catch (e) {
+      console.log("Error", e);
+      props.history.push("/profile");
+    }
+  };
   return (
-
     <Card small className="mb-4">
       <CardHeader className="border-bottom">
         <h6 className="m-0">Account Details</h6>
@@ -38,8 +86,10 @@ const UserAccountDetails = ({ userDetails }) => {
                     <FormInput
                       id="feFirstName"
                       placeholder="First Name"
-                      value={userDetails.firstName}
-                      onChange={() => { }}
+                      value={firstName}
+                      onChange={(e) => {
+                        setFirstName(e.target.value);
+                      }}
                     />
                   </Col>
                   {/* Last Name */}
@@ -48,8 +98,10 @@ const UserAccountDetails = ({ userDetails }) => {
                     <FormInput
                       id="feLastName"
                       placeholder="Last Name"
-                      value={userDetails.lastName}
-                      onChange={() => { }}
+                      value={lastName}
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
                     />
                   </Col>
                 </Row>
@@ -62,8 +114,9 @@ const UserAccountDetails = ({ userDetails }) => {
                       id="feEmail"
                       placeholder="Email Address"
                       value={userDetails.email}
-                      onChange={() => { }}
+                      onChange={() => {}}
                       autoComplete="email"
+                      readOnly
                     />
                   </Col>
                   {/* Password */}
@@ -99,43 +152,54 @@ const UserAccountDetails = ({ userDetails }) => {
                   />
                 </Col> */}
                   {/* State */}
-                  {/* <Col md="4" className="form-group">
-                  <label htmlFor="feInputState">State</label>
-                  <FormSelect id="feInputState">
-                    <option>Choose...</option>
-                    <option>...</option>
-                  </FormSelect>
-                </Col> */}
+                  <Col md="4" className="form-group">
+                    <label htmlFor="phone">Phone</label>
+                    <FormInput
+                      type="text"
+                      id="phone"
+                      placeholder="Phone"
+                      value={phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                      }}
+                    />
+                  </Col>
                   {/* Zip Code */}
-                  {/* <Col md="2" className="form-group">
-                  <label htmlFor="feZipCode">Zip</label>
-                  <FormInput
-                    id="feZipCode"
-                    placeholder="Zip"
-                    onChange={() => {}}
-                  />
-                </Col> */}
+                  <Col md="3" className="form-group">
+                    <label htmlFor="CountryCode">Country Code</label>
+                    <FormInput
+                      type="text"
+                      id="CountryCode"
+                      placeholder="Country Code"
+                      value={countryCode}
+                      onChange={(e) => {
+                        setCountryCode(e.target.value);
+                      }}
+                    />
+                  </Col>
                 </Row>
 
-                <Button className="btn btn-primary" onClick={handleUpdate}>Update Account</Button>
+                <Button className="btn btn-primary" onClick={handleUpdate}>
+                  Update Account
+                </Button>
               </Form>
             </Col>
           </Row>
         </ListGroupItem>
       </ListGroup>
     </Card>
-  )
+  );
 };
 
 UserAccountDetails.propTypes = {
   /**
    * The component's title.
    */
-  title: PropTypes.string
+  title: PropTypes.string,
 };
 
 UserAccountDetails.defaultProps = {
-  title: "Account Details"
+  title: "Account Details",
 };
 
 export default UserAccountDetails;

@@ -1,15 +1,23 @@
 import React from "react";
 import { Container, Row, Col } from "shards-react";
-
+import { useSelector } from "react-redux";
 import PageTitle from "./components/PageTitle";
 import UserDetails from "./components/UserDetails";
 import UserAccountDetails from "./components/UserAccountDetails";
 
 const UserProfileLite = (props) => {
+  const user = useSelector((state) => state.loggedUser);
   const userDetails = {
-    firstName : localStorage.getItem('firstName'),
-    lastName : localStorage.getItem('lastName'),
-    email: localStorage.getItem('email')
+    // firstName : localStorage.getItem('firstName'),
+    // lastName : localStorage.getItem('lastName'),
+    // email: localStorage.getItem('email'),
+    // phone: localStorage.getItem('phone'),
+    // code: localStorage.getItem('code')
+    firstName: user.user ? user.user.firstName: null,
+    lastName: user.user ? user.user.lastName: null,
+    email: user.user ? user.user.email: null,
+    phone: user.user ? user.user.contactDetails.mobileNo: null,
+    code: user.user ? user.user.contactDetails.countryCode: null,
   }
   return (
 
@@ -22,7 +30,7 @@ const UserProfileLite = (props) => {
           <UserDetails userDetails={userDetails} />
         </Col>
         <Col lg="8">
-          <UserAccountDetails userDetails={userDetails} />
+          <UserAccountDetails props={props} userDetails={userDetails} />
         </Col>
       </Row>
     </Container>

@@ -13,8 +13,10 @@ import { Modal, Button}  from "react-bootstrap";
 // const token=localStorage.getItem('token');
 const TaskListPage = (props) => {
   const userData = useSelector((state) => state.loggedUser);
-  const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role');
+  // const token = localStorage.getItem('token');
+  // const role = localStorage.getItem('role');
+  const role = userData.user.role;
+  const token = userData.user.token;
   // const token = userData.user.token;
 
   const [show, setShow] = useState(false);
