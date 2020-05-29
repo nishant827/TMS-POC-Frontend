@@ -75,7 +75,14 @@ const TaskListPage = (props) => {
       taskId:id
     });  
   };  
-
+  //review task
+  const requestItems= (id) => {
+    console.log('hdsjhbshdbhvbhsdbsdgydsbvbsdhbygsddsfdbfbd');
+    props.history.push({
+      pathname: '/inventorylist/' + id,
+      taskId:id
+    });
+  };
   return (
     <Fragment>
      {role && role!=="TECH"? <button className="btn btn-primary" onClick={handleShow}>
@@ -123,12 +130,7 @@ const TaskListPage = (props) => {
               <td> {taskrow.estimatedEndDate} </td>
               <td>
                 <div className="btn-group">
-                  {/* <button 
-                      className="btn btn-primary" 
-                      onClick={() => { editTask(taskrow._id) }}
-                      >
-                      Edit
-                    </button>   */}
+                {role && role!=="TECH"? 
                   <button
                     // style={{ background: "#0366ee" }}
                     className='btn btn-primary m-2'
@@ -137,17 +139,31 @@ const TaskListPage = (props) => {
                     }}
                   >
                     Edit
-                  </button>
+                  </button>: "" }
+                  {role && role!=="TECH"?
                   <button
                     className="btn btn-primary m-2"
-
                     onClick={() => { submit(taskrow) }}
-                    // onClick={() => {
-                    //   deleteTask(taskrow._id);
-                    // }}
-                  >
-                    Delete
+                  >Delete
                   </button>
+                  : ""}
+                  {role && role==="ZH" || role==="SA"?
+                    <button
+                      className="btn btn-primary m-2"
+                      onClick={() => {
+                        requestItems(taskrow._id);
+                      }}>
+                        Review
+                      </button>: "" }
+                  {role && role==="TECH"?
+                    <button className="btn btn-primary"
+                    onClick={() => {
+                      requestItems(taskrow._id);
+                    }}
+                    >Request Items</button>
+                    : ""
+                  }
+
                 </div>
               </td>
             </tr>
