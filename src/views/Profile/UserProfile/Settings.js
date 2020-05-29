@@ -14,19 +14,25 @@ import {
   Button,
 } from "shards-react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../../../views/Profile/actions/index";
 
 const Settings = (props) => {
   const [currentPassword, setcurrentPassword] = useState("");
   const [newPassword, setnewPassword] = useState("");
   const [newPassword2, setnewPassword2] = useState("");
-  const token = localStorage.getItem("token");
-  const role = localStorage.getItem("role");
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.loggedUser);
+  let role = user.user ? user.user.role : null;
+  let token = user.user ? user.user.token : null;
+  // const token = localStorage.getItem("token");
+  // const role = localStorage.getItem("role");
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (newPassword === newPassword2) {
       try {
-        console.log("aaaaa");
+
         let { data } = await axios.put(
           "http://localhost:3030/api/user/update/password",
           {
@@ -40,14 +46,18 @@ const Settings = (props) => {
           alert(data.message);
         }
         if (data.status === 200) {
-          if (role === "TECH") {
-            alert("password updated succesfully");
-            props.history.push("/tasklist");
-          } else {
-            alert("password updated succesfully");
-            props.history.push("/userlist");
-          }
-          console.log("siuccesss");
+            dispatch(signOut());
+            localStorage.clear();
+            // localStorage.removeItem("token");
+            // localStorage.removeItem("role");
+            // localStorage.removeItem("firstName");
+            // localStorage.removeItem("lastName");
+            // localStorage.removeItem("email");
+            // localStorage.removeItem("id");
+            // localStorage.removeItem("code");
+            // localStorage.removeItem("phone");
+            console.log("logout is calling")
+            props.history.push('/login')
         } else {
           alert("Wrong password");
         }

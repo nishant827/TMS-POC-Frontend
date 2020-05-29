@@ -10,3 +10,10 @@ export const signOut = () => {
     type: "SIGN_OUT",
   };
 };
+
+export const profileData = (userData) => {
+  return {
+    type: "PROFILE_DATA",
+    payload: userData
+  };
+};

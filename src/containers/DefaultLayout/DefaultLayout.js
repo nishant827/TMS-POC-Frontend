@@ -30,7 +30,8 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 const DefaultLayout=(props)=>{
   const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
   const userData = useSelector((state) => state.loggedUser);
-  const token = localStorage.getItem('token')
+  // const token = localStorage.getItem('token')
+  const token = userData.user ? userData.user.role : null;
 
   if (token === null) {
     props.history.push("/login");
@@ -42,10 +43,15 @@ const DefaultLayout=(props)=>{
     e.preventDefault()
    console.log("calling signout function");
    dispatch(signOut());
-   localStorage.removeItem("token");
-   localStorage.removeItem("role");
-   localStorage.removeItem("firstName");
-   localStorage.removeItem("lastName");
+   localStorage.clear()
+  //  localStorage.removeItem("token");
+  //  localStorage.removeItem("role");
+  //  localStorage.removeItem("firstName");
+  //  localStorage.removeItem("lastName");
+  //  localStorage.removeItem("email");
+  //  localStorage.removeItem("id");
+  //  localStorage.removeItem("code");
+  //  localStorage.removeItem("phone");
    console.log("logout is calling")
    props.history.push('/login')
  };

@@ -1,17 +1,23 @@
 const userObj = {
-    user: null,
-    isLogged: false
-
-}
+  user: null,
+  isLogged: false,
+};
 
 export const loggedUser = (state = userObj, action) => {
-    switch (action.type) {
-        case 'SIGN_IN':
-            return {...userObj, user: action.payload, isLogged: true}
-        case "SIGN_OUT":
-
-            return {...userObj, user: null, isLogged: false};
-        default:
-            return state;
+  switch (action.type) {
+    case "SIGN_IN": {
+      console.log(state, "check state ::::00", action.payload);
+      return { ...state, user: action.payload, isLogged: true };
     }
-}
+    case "SIGN_OUT":
+      return { ...state, user: null, isLogged: false };
+    case "PROFILE_DATA":
+      return {
+        ...state,
+        user: { ...state.user, ...action.payload },
+        isLogged: true,
+      };
+    default:
+      return state;
+  }
+};

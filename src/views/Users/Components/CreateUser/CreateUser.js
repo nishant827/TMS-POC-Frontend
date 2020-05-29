@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import Select from 'react-select';
 import axios from 'axios';
+import { useSelector } from "react-redux";
 import {NotificationContainer, NotificationManager} from 'react-notifications'
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 function Createuser(props) {
+    const user = useSelector((state) => state.loggedUser);
+    let token = user.user ? user.user.token : null;
    
     const [user, setuser] = useState({ firstName: '', lastName: '', email: '', password: '', age: '',  countryCode: '', mobileNo: "" , 
     Gender: "" ,role:""
@@ -38,7 +41,7 @@ function Createuser(props) {
         };
         console.log("apiUrl",apiUrl,"data",data);
         
-        const token=localStorage.getItem('token');
+        // const token=localStorage.getItem('token');
         console.log("token",token);
         axios.post(apiUrl, data, { headers: {"Authorization" : `${token}`} })
 

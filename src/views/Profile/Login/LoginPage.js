@@ -34,11 +34,15 @@ const LoginPage = (props) => {
       if (status === 200) {
         data.result.data.user.token = data.result.data.token;
         dispatch(signIn(data.result.data.user));
-        localStorage.setItem("token", data.result.data.token);
-        localStorage.setItem("role", data.result.data.user.role);
-        localStorage.setItem("firstName", data.result.data.user.firstName);
-        localStorage.setItem("lastName", data.result.data.user.lastName);
-        localStorage.setItem("email", data.result.data.user.email);
+        // localStorage.setItem("token", data.result.data.token);
+        // localStorage.setItem("role", data.result.data.user.role);
+        // localStorage.setItem("firstName", data.result.data.user.firstName);
+        // localStorage.setItem("lastName", data.result.data.user.lastName);
+        // localStorage.setItem("email", data.result.data.user.email);
+        // localStorage.setItem("id", data.result.data.user._id);
+        // localStorage.setItem("code", data.result.data.user.contactDetails.countryCode);
+        // localStorage.setItem("phone", data.result.data.user.contactDetails.mobileNo);
+        console.log('===', data.result.data.user.role)
         if (data.result.data.user.role === "TECH") {
           props.history.push("/tasklist");
         } else {
