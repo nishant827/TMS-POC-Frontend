@@ -45,10 +45,10 @@ const InventoryListPage = (props) => {
       },
       {
         img:"antenna.jpg",
-        name: "satish"},
+        name: "Resistor"},
       {
         img:"receiver.jpg",
-        name: "Tej"
+        name: "Inductor"
       }];
 
   // pagination
@@ -105,7 +105,7 @@ const InventoryListPage = (props) => {
       }    
   
       const options = ["communication", "Networking"];
-      const defaultOption = options[0];
+      // const defaultOption = options[0];
       const _onSelect = (e) => {
         setCategeory(e.value)
       };
@@ -117,8 +117,8 @@ const InventoryListPage = (props) => {
           className="m-2"
           options={options}
           onChange={(e) => _onSelect(e)}
-          value={defaultOption}
-          placeholder="Select an option"
+          // value={defaultOption}
+          placeholder="Select Category"
         />
         <input
           type="text"
