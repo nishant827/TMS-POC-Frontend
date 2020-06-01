@@ -1,8 +1,11 @@
 import React, { Fragment, useState,useEffect } from "react";
-// import { Badge, CardHeader, Pagination, PaginationItem, PaginationLink, Table ,Modal, ModalHeader, ModalBody, ModalFooter, Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+import { Badge, CardHeader, Pagination, PaginationItem, PaginationLink, Table ,Modal, ModalHeader, ModalBody, ModalFooter, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 
 import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux';
+import { Button } from "reactstrap";
 // const token=localStorage.getItem('token');
 const InventoryListPage = (props) => {
   const userData = useSelector((state) => state.loggedUser);
@@ -16,6 +19,8 @@ const InventoryListPage = (props) => {
   //Intialize state
   const [Data, setData] = useState([]);
   const [SearchResult, setSearchResult] = useState(false);
+  const [categeory, setCategeory] = useState('')
+  
   const dummydata = [{
     img:"antenna.jpg",
     name: "Antenna"
@@ -30,9 +35,37 @@ const InventoryListPage = (props) => {
     {
       img:"receiver.jpg",
       name: "Receiver"
-    }];
-  
-  
+    },{
+      img:"antenna.jpg",
+      name: "Antenna"
+      },
+      {
+        img:"receiver.jpg",
+        name: "Receiver"
+      },
+      {
+        img:"antenna.jpg",
+        name: "satish"},
+      {
+        img:"receiver.jpg",
+        name: "Tej"
+      }];
+
+  // pagination
+  const [currentPage, setCurrentPage] = useState({ currentPage: 0 })
+  const pageSize = 4;
+  const pagesCount = Math.ceil(dummydata.length / pageSize);
+
+  const handleClick = (e, index) => {
+    console.log("handle click is calling here", JSON.stringify(index));
+    e.preventDefault();
+
+    setCurrentPage({
+      currentPage: index
+    });
+
+  }
+
   //get data from api and assign to state
   const GetData = async () => {  
     const result = await axios('http://localhost:3030/api/task/list',{ headers: {"Authorization" : `${token}`} }); 
@@ -40,7 +73,7 @@ const InventoryListPage = (props) => {
     setData(result.data.data);  
   };  
   useEffect(() => {  
-    GetData();  
+    // GetData();  
   }, []); 
   //delete Item 
     const deleteItem = (id) => {  
@@ -59,65 +92,146 @@ const InventoryListPage = (props) => {
     };
     const searchData = async (searchVal) => {
      // setLoading(true);
-      axios
-        .get(`http://localhost:3030/api/user/search?searchedText=${searchVal}&limit=5&offset=0`, { headers: { "Authorization": `${token}` } })
-        .then(res => {
-          //setData(res.data.data);
-          setSearchResult(true);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      }      
+     setSearchResult(true);
+      // axios
+      //   .get(`http://localhost:3030/api/user/search?searchedText=${searchVal}&limit=5&offset=0`, { headers: { "Authorization": `${token}` } })
+      //   .then(res => {
+      //     //setData(res.data.data);
+      //     setSearchResult(true);
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+      }    
+  
+      const options = ["communication", "Networking"];
+      const defaultOption = options[0];
+      const _onSelect = (e) => {
+        setCategeory(e.value)
+      };
   
   return (
     <Fragment>
-       
-<div className="container">
-    <input
-      type="text"
-      placeholder="Search Items"
-      onChange={e => searchData(e.target.value)}
-    />
-    {SearchResult ?
-      <div className="card-deck">
-        { dummydata.map((card) =>(
-          <div className="card">
-            <div className="card-body text-center">
-              <img
-                className="card-img-top"
-                src={ require("../../../../assets/img/brand/"+card.img)}
-                alt="item image"
-              />
-              <h4 className="card-title">{card.name}</h4>
-              <p className="card-text">Antenna for long range communication.</p>
-              <a href="#" className="btn btn-primary">Add To List</a>
-            </div>
+      <div className="container">
+        <Dropdown
+          className="m-2"
+          options={options}
+          onChange={(e) => _onSelect(e)}
+          value={defaultOption}
+          placeholder="Select an option"
+        />
+        <input
+          type="text"
+          placeholder="Search Items"
+          onChange={(e) => searchData(e.target.value)}
+        />
+        <button className="btn btn-primary ml-2">Search</button>
+
+        {SearchResult ? (
+          <div className="card-deck">
+            {/* {dummydata.map((card, idx) => (
+              <div className="card" key={idx}>
+                <div className="card-body text-center">
+                  <img
+                    className="card-img-top"
+                    src={require("../../../../assets/img/brand/" + card.img)}
+                    alt="item image"
+                  />
+                  <h4 className="card-title">{card.name}</h4>
+                  <p className="card-text">
+                    Antenna for long range communication.
+                  </p>
+                  <a href="#" className="btn btn-primary">
+                    Add To List
+                  </a>
+                </div>
+              </div>
+            ))} */}
+
+            {
+
+              dummydata.slice(currentPage.currentPage * pageSize,
+                (currentPage.currentPage + 1) * pageSize).map((card, idx) => {
+
+                  return (
+                    <div className="card">
+                      <div className="card-body text-center">
+                        <img
+                          className="card-img-top"
+                          src={require("../../../../assets/img/brand/" + card.img)}
+                          alt="item image"
+                        />
+                        <h4 className="card-title">{card.name}</h4>
+                        <p className="card-text">
+                          Antenna for long range communication.
+    </p>
+                        <a href="#" className="btn btn-primary">
+                          Add To List
+    </a>
+                      </div>
+                    </div>
+                  )
+
+                })}
           </div>
-        ))}
+        ) : (
+          ""
+        )}
+        <br />
+        {/* {SearchResult ? (
+          <div className="card-deck">
+            {dummydata.map((card) => (
+              <div className="card">
+                <div className="card-body text-center">
+                  <img
+                    className="card-img-top"
+                    src={require("../../../../assets/img/brand/" + card.img)}
+                    alt="item image"
+                  />
+                  <h4 className="card-title">{card.name}</h4>
+                  <p className="card-text">
+                    Antenna for long range communication.
+                  </p>
+                  <a href="#" className="btn btn-primary">
+                    Add To List
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          ""
+        )} */}
+        <br />
       </div>
-      : "" }
-      <br/>
-      {SearchResult ?
-      <div className="card-deck">
-        { dummydata.map((card) =>( 
-          <div className="card">
-            <div className="card-body text-center">
-              <img
-                className="card-img-top"
-                src={ require("../../../../assets/img/brand/"+card.img)}
-                alt="item image"
-              />
-              <h4 className="card-title">{card.name}</h4>
-              <p className="card-text">Antenna for long range communication.</p>
-              <a href="#" className="btn btn-primary">Add To List</a>
-            </div>
-          </div>
+
+      {SearchResult && <Pagination aria-label="Page navigation example">
+        <PaginationItem disabled={currentPage.currentPage <= 0}>
+          <PaginationLink
+            onClick={(e) => handleClick(e, currentPage.currentPage - 1)}
+            previous
+            href="#"
+          />
+        </PaginationItem>
+
+        {[...Array(pagesCount)].map((page, i) => (
+          <PaginationItem active={i === currentPage.currentPage} key={i}>
+            <PaginationLink onClick={(e) => handleClick(e, i)} href="#">
+              {i + 1}
+            </PaginationLink>
+          </PaginationItem>
         ))}
-      </div> : "" }
-      <br/>
-    </div>
-  </Fragment>
+
+        <PaginationItem disabled={currentPage.currentPage >= pagesCount - 1}>
+          <PaginationLink
+            onClick={(e) => handleClick(e, currentPage.currentPage + 1)}
+            next
+            href="#"
+          />
+        </PaginationItem>
+      </Pagination>
+      }
+    </Fragment>
   );
 };
 
